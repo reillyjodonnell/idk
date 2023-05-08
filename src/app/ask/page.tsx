@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { History } from 'lucide-react';
+import { History, Terminal, X } from 'lucide-react';
 
 import { Button } from '@/components/button';
 import {
@@ -11,23 +11,8 @@ import { Label } from '@/components/label';
 import { Separator } from '@/components/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/tabs';
 import { Textarea } from '@/components/textarea';
-
-// import { CodeViewer } from './components/code-viewer';
-// import { Icons } from './components/icons';
-// import { MaxLengthSelector } from './components/maxlength-selector';
-// import { ModelSelector } from './components/model-selector';
-// import { PresetActions } from './components/preset-actions';
-// import { PresetSave } from './components/preset-save';
-// import { PresetSelector } from './components/preset-selector';
-// import { PresetShare } from './components/preset-share';
-// import { TemperatureSelector } from './components/temperature-selector';
-// import { TopPSelector } from './components/top-p-selector';
-// import { models, types } from './data/models';
-// import { presets } from './data/presets';
-import Image from 'next/image';
-import { Icons } from '@/components/icons';
 import Header from '@/components/header';
-
+import AlertComponent from '@/client-components/alert';
 export const metadata: Metadata = {
   title: 'Playground',
   description: 'The OpenAI Playground built using the components.',
@@ -37,25 +22,10 @@ export default function Page() {
   return (
     <>
       <Header />
-      <div className="md:hidden">
-        <Image
-          src="/examples/playground-light.png"
-          width={1280}
-          height={916}
-          alt="Playground"
-          className="block dark:hidden"
-        />
-        <Image
-          src="/examples/playground-dark.png"
-          width={1280}
-          height={916}
-          alt="Playground"
-          className="hidden dark:block"
-        />
-      </div>
+
       <div className="hidden h-full flex-col md:flex">
         <div className="container flex flex-col items-start justify-between space-y-2 py-4 sm:flex-row sm:items-center sm:space-y-0 md:h-16">
-          <h2 className="text-lg font-semibold">Playground</h2>
+          <h2 className="text-lg font-semibold">Ask a Question</h2>
           {/* <div className="ml-auto flex w-full space-x-2 sm:justify-end">
             <PresetSelector presets={presets} />
             <PresetSave />
@@ -66,7 +36,9 @@ export default function Page() {
             <PresetActions />
           </div> */}
         </div>
+
         <Separator />
+        <AlertComponent />
         <Tabs defaultValue="complete" className="flex-1">
           <div className="container h-full py-6">
             <div className="grid h-full items-stretch gap-6 md:grid-cols-[1fr_200px]">
@@ -109,7 +81,7 @@ export default function Page() {
                 <TabsContent value="complete" className="mt-0 border-0 p-0">
                   <div className="flex h-full flex-col space-y-4">
                     <Textarea
-                      placeholder="Write a tagline for an ice cream shop"
+                      placeholder="I'm experiencing a bug with the app. Here's the relevant code:"
                       className="min-h-[400px] flex-1 p-4 md:min-h-[700px] lg:min-h-[700px]"
                     />
                     <div className="flex items-center space-x-2">
