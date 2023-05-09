@@ -3,16 +3,15 @@ import { Button } from '@/components/button';
 import Header from '@/components/header';
 import Link from 'next/link';
 import { Sidebar } from './sidebar';
-import { Separator } from '@/components/separator';
 import RecentlyAsked from './recently-asked';
 
 export default function Home() {
   return (
     <div className="  dark:bg-black w-full h-full ">
       <Header className="py-2" />
-      <main className="flex w-full">
+      <main className="flex w-full dark:bg-black bg-white">
         <Sidebar className="w-1/5 border-r " playlists={[]} />
-        <section className="flex flex-col items-center justify-center h-screen flex-1">
+        <section className="flex flex-col items-center justify-center flex-1">
           <h1 className="text-xl font-bold">
             Get the help of the community at the click of a button!
           </h1>
