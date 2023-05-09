@@ -1,30 +1,16 @@
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/avatar';
 import { Pencil } from 'lucide-react';
-
 import { Button } from '@/components/button';
-import {
-  Command,
-  CommandInput,
-  CommandList,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  CommandSeparator,
-  CommandShortcut,
-} from '@/components/command';
-import { Input } from '@/components/input';
-import Logo from '@/components/logo';
-import { MainNav } from '@/components/main-nav';
-import { ModeToggle } from '@/components/mode-toggle';
 import Header from '@/components/header';
 import Link from 'next/link';
+import { Sidebar } from './sidebar';
 
 export default function Home() {
   return (
-    <div className="  dark:bg-black w-full h-full">
-      <Header />
-      <main>
-        <section className="flex flex-col items-center justify-center h-screen">
+    <div className="  dark:bg-black w-full h-full ">
+      <Header className="py-2" />
+      <main className="flex w-full">
+        <Sidebar className="w-1/5 border-r " playlists={[]} />
+        <section className="flex flex-col items-center justify-center h-screen flex-1">
           <h1 className="text-xl font-bold">
             Get the help of the community at the click of a button!
           </h1>
