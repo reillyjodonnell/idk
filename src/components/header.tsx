@@ -12,7 +12,7 @@ export default function Header({ className = '' }: { className?: string }) {
   return (
     <header
       className={cn(
-        `flex justify-center items-center supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b bg-background/95 shadow-sm backdrop-blur`,
+        `py-2 flex justify-center items-center supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b bg-background/95 shadow-sm backdrop-blur`,
         className
       )}
     >

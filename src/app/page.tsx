@@ -7,11 +7,12 @@ import RecentlyAsked from './recently-asked';
 
 export default function Home() {
   return (
-    <div className="  dark:bg-black w-full h-full ">
-      <Header className="py-2" />
-      <main className="flex w-full dark:bg-black bg-white">
-        <Sidebar className="w-1/5 border-r " playlists={[]} />
-        <section className="flex flex-col items-center justify-center flex-1">
+    // <div className="  dark:bg-black w-full h-full ">
+    //   <Header className="py-2" />
+    <main className="flex w-full dark:bg-black bg-white">
+      <Sidebar className="w-1/5 border-r " playlists={[]} />
+      <section className="flex h-full flex-col items-center justify-center flex-1">
+        <div className="flex flex-col justify-center items-center my-20">
           <h1 className="text-xl font-bold">
             Get the help of the community at the click of a button!
           </h1>
@@ -21,10 +22,10 @@ export default function Home() {
               <Pencil className="mr-2 h-4 w-4" /> Ask a question
             </Button>
           </Link>
-          <br />
-          <RecentlyAsked />
-        </section>
-      </main>
-    </div>
+        </div>
+        <RecentlyAsked />
+      </section>
+    </main>
+    // </div>
   );
 }

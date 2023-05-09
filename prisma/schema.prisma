@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  username  String    @unique
+  email     String    @unique
+  password  String
+  avatar    String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  posts     Post[]
+  comments  Comment[]
+}
+
+model Post {
+  id         Int         @id @default(autoincrement())
+  title      String
+  body       String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  author     User        @relation(fields: [authorId], references: [id])
+  authorId   String
+  thumbsUp   Int         @default(0)
+  thumbsDown Int         @default(0)
+  fire       Int         @default(0)
+  eyes       Int         @default(0)
+  comments   Comment[]
+  tags       Tag[]       @relation("PostToTag")
+  PostToTag  PostToTag[]
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  body       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String
+  thumbsUp   Int      @default(0)
+  thumbsDown Int      @default(0)
+  fire       Int      @default(0)
+  eyes       Int      @default(0)
+  post       Post     @relation(fields: [postId], references: [id])
+  postId     Int
+}
+
+model Tag {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique
+  posts     Post[]      @relation("PostToTag")
+  PostToTag PostToTag[]
+}
+
+// Create a new model for the many-to-many relationship between Post and Tag
+model PostToTag {
+  id     Int  @id @default(autoincrement())
+  postId Int
+  tagId  Int
+  post   Post @relation(fields: [postId], references: [id])
+  tag    Tag  @relation(fields: [tagId], references: [id])
+
+  @@unique([postId, tagId])
+}
