@@ -83,11 +83,11 @@ export default function Editor() {
       </div>
 
       <div className="flex items-center space-x-2 my-4">
-        <Button className="px-8 py-6" disabled={!title || !input}>
+        <Button className="px-4 py-3" disabled={!title || !input}>
           Submit
         </Button>
         <Button
-          className="px-8 py-6"
+          className="px-4 py-3"
           disabled={!title || !input}
           variant="destructive"
           onClick={() => {

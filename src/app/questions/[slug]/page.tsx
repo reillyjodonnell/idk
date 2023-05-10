@@ -50,9 +50,9 @@ export default async function Page({ params }: any) {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <Link href={`users/${userId}`}>
-        <UserAvatar size="xl" alt="" src={data.author.avatar ?? ''} />
-      </Link>
+      {/* <Link href={`users/${userId}`}> */}
+      <UserAvatar size="xl" alt="" src={data.author.avatar ?? ''} />
+      {/* </Link> */}
       <span>@{data.author.username}</span>
       <span>
         {formatTime(data.updatedAt.toISOString()) ??

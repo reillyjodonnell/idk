@@ -41,13 +41,14 @@ export default function AuthenticationPage() {
           Register
         </Link>
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-          <div
-            className="absolute inset-0 bg-cover"
-            style={{
-              backgroundImage:
-                'url(https://images.pexels.com/photos/3648850/pexels-photo-3648850.jpeg)',
-            }}
+          <Image
+            alt="A starry, dark sky"
+            height={843}
+            width={1280}
+            className="absolute inset-0 bg-cover h-full w-full"
+            src={'/starry-bg.jpeg'}
           />
+
           <div className="relative z-20 flex items-center text-lg font-medium">
             <Logo />
           </div>

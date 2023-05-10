@@ -12,9 +12,9 @@ export default function PromptAlert() {
         onClick={() => setShowAlert(false)}
         className="h-4 w-4 absolute right-1 top-1 cursor-pointer  z-10"
       />
-      <Alert className="w-fit mb-6">
+      <Alert className="w-80 mb-6">
         <Terminal className="h-4 w-4" />
-        <AlertTitle>Heads up!</AlertTitle>
+        <AlertTitle className="">Heads up!</AlertTitle>
         <AlertDescription>We fully support Mardown 😎</AlertDescription>
       </Alert>
     </div>

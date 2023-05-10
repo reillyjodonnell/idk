@@ -1,7 +1,7 @@
 'use client';
 
 import { Metadata } from 'next';
-import { History, Terminal, X } from 'lucide-react';
+import { History, Pencil, Terminal, X } from 'lucide-react';
 
 import { Button } from '@/components/button';
 import {
@@ -20,11 +20,64 @@ import { Suspense } from 'react';
 import { Skeleton } from '@/components/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/alert';
 import PromptAlert from './prompt-alert';
+import { TagSelector } from './tag-selector';
 
 // export const metadata: Metadata = {
 //   title: 'Playground',
 //   description: 'The OpenAI Playground built using the components.',
 // };
+
+const options = [
+  { label: 'JavaScript', value: 'JavaScript' },
+  { label: 'React', value: 'React' },
+  { label: 'Angular', value: 'Angular' },
+  { label: 'Vue.js', value: 'Vue.js' },
+  { label: 'Node.js', value: 'Node.js' },
+  { label: 'Java', value: 'Java' },
+  { label: 'Spring', value: 'Spring' },
+  { label: 'Python', value: 'Python' },
+  { label: 'Django', value: 'Django' },
+  { label: 'Flask', value: 'Flask' },
+  { label: 'PHP', value: 'PHP' },
+  { label: 'Laravel', value: 'Laravel' },
+  { label: 'Symfony', value: 'Symfony' },
+  { label: 'Ruby', value: 'Ruby' },
+  { label: 'Rails', value: 'Rails' },
+  { label: 'C#', value: 'C#' },
+  { label: '.NET', value: '.NET' },
+  { label: 'ASP.NET', value: 'ASP.NET' },
+  { label: 'Swift', value: 'Swift' },
+  { label: 'iOS', value: 'iOS' },
+  { label: 'Android', value: 'Android' },
+  { label: 'Kotlin', value: 'Kotlin' },
+  { label: 'Go', value: 'Go' },
+  { label: 'Rust', value: 'Rust' },
+  { label: 'TypeScript', value: 'TypeScript' },
+  { label: 'Express.js', value: 'Express.js' },
+  { label: 'Next.js', value: 'Next.js' },
+  { label: 'Gatsby', value: 'Gatsby' },
+  { label: 'Nest.js', value: 'Nest.js' },
+  { label: 'React Native', value: 'React Native' },
+  { label: 'Flutter', value: 'Flutter' },
+  { label: 'Vue Native', value: 'Vue Native' },
+  { label: 'Ionic', value: 'Ionic' },
+  { label: 'Electron', value: 'Electron' },
+  { label: 'jQuery', value: 'jQuery' },
+  { label: 'Bootstrap', value: 'Bootstrap' },
+  { label: 'Tailwind CSS', value: 'Tailwind CSS' },
+  { label: 'Sass', value: 'Sass' },
+  { label: 'Less', value: 'Less' },
+  { label: 'PostgreSQL', value: 'PostgreSQL' },
+  { label: 'MySQL', value: 'MySQL' },
+  { label: 'MongoDB', value: 'MongoDB' },
+  { label: 'Redis', value: 'Redis' },
+  { label: 'GraphQL', value: 'GraphQL' },
+  { label: 'Apollo', value: 'Apollo' },
+  { label: 'REST API', value: 'REST API' },
+  { label: 'WebSocket', value: 'WebSocket' },
+  { label: 'Docker', value: 'Docker' },
+  { label: 'Kubernetes', value: 'Kubernetes' },
+];
 
 export default function Page() {
   return (
@@ -52,40 +105,10 @@ export default function Page() {
             <PromptAlert />
 
             <div className="grid h-full items-stretch gap-6 md:grid-cols-[1fr_200px]">
-              <div className="hidden flex-col space-y-4 sm:flex md:order-2">
-                <div className="grid gap-2">
-                  <HoverCard openDelay={200}>
-                    <HoverCardTrigger asChild>
-                      <span className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        Mode
-                      </span>
-                    </HoverCardTrigger>
-                    <HoverCardContent className="w-[320px] text-sm" side="left">
-                      Choose the interface that best suits your task. You can
-                      provide: a simple prompt to complete, starting and ending
-                      text to insert a completion within, or some text with
-                      instructions to edit it.
-                    </HoverCardContent>
-                  </HoverCard>
-                  <TabsList className="grid grid-cols-3">
-                    <TabsTrigger value="complete">
-                      <span className="sr-only">Complete</span>
-                      {/* <Icons.completeMode className="h-5 w-5" /> */}
-                    </TabsTrigger>
-                    <TabsTrigger value="insert">
-                      <span className="sr-only">Insert</span>
-                      {/* <Icons.insertMode className="h-5 w-5" /> */}
-                    </TabsTrigger>
-                    <TabsTrigger value="edit">
-                      <span className="sr-only">Edit</span>
-                      {/* <Icons.editMode className="h-5 w-5" /> */}
-                    </TabsTrigger>
-                  </TabsList>
+              <div className="hidden h-full border justify-start items-center p-4 flex-col space-y-4 sm:flex md:order-2">
+                <div className="grid gap-2 relative ">
+                  <TagSelector title="Tags" options={options} />
                 </div>
-                {/* <ModelSelector types={types} models={models} />
-                <TemperatureSelector defaultValue={[0.56]} />
-                <MaxLengthSelector defaultValue={[256]} />
-                <TopPSelector defaultValue={[0.9]} /> */}
               </div>
               <div className="md:order-1 h-full">
                 <TabsContent
