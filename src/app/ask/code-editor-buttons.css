@@ -56,3 +56,13 @@
   border-top: 2px solid rgba(#0d0d0d, 0.1);
   margin: 2rem 0;
 }
+
+.code-block {
+  position: relative;
+}
+
+.code-block pre {
+  padding-top: 50px;
+  min-height: 100px;
+  width: 100%;
+}

@@ -87,7 +87,7 @@ export default function Page() {
                   value="complete"
                   className="mt-0 border-0 p-0 h-full"
                 >
-                  <div className="flex flex-wrap h-full w-full">
+                  <div className="flex flex-col h-full w-full">
                     <Suspense
                       fallback={
                         <div className="flex items-center space-x-4">

@@ -16,6 +16,7 @@ import CodeEditorButtons from './code-editor-buttons';
 import { Color } from '@tiptap/extension-color';
 import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
+import EditorMenuBar from './editor-menu-bar';
 
 lowlight.registerLanguage('html', html);
 lowlight.registerLanguage('css', css);
@@ -62,7 +63,7 @@ export default function Editor() {
 
   return (
     <div className="flex flex-col h-full editor-content-parent">
-      <MenuBar editor={editor} />
+      <EditorMenuBar editor={editor} />
       <EditorContent content={input} editor={editor} />
     </div>
   );
@@ -72,33 +73,13 @@ const MenuBar = ({ editor }: { editor: EditorType }) => {
   return (
     <div className="flex border p-2 ">
       <button
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        disabled={!editor.can().chain().focus().toggleBold().run()}
-        className={editor.isActive('bold') ? 'is-active' : ''}
-      >
-        bold
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        disabled={!editor.can().chain().focus().toggleItalic().run()}
-        className={editor.isActive('italic') ? 'is-active' : ''}
-      >
-        italic
-      </button>
-      <button
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
         className={editor.isActive('strike') ? 'is-active' : ''}
       >
         strike
       </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        disabled={!editor.can().chain().focus().toggleCode().run()}
-        className={editor.isActive('code') ? 'is-active' : ''}
-      >
-        code
-      </button>
+
       <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
         clear marks
       </button>
