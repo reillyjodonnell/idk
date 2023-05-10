@@ -18,6 +18,8 @@ import AlertComponent from '@/client-components/alert';
 import Editor from './editor';
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/skeleton';
+import { Alert, AlertDescription, AlertTitle } from '@/components/alert';
+import PromptAlert from './prompt-alert';
 
 // export const metadata: Metadata = {
 //   title: 'Playground',
@@ -44,8 +46,11 @@ export default function Page() {
         </div>
 
         <Separator />
+
         <Tabs defaultValue="complete" className="flex-1">
           <div className="container h-full py-6">
+            <PromptAlert />
+
             <div className="grid h-full items-stretch gap-6 md:grid-cols-[1fr_200px]">
               <div className="hidden flex-col space-y-4 sm:flex md:order-2">
                 <div className="grid gap-2">
@@ -87,78 +92,7 @@ export default function Page() {
                   value="complete"
                   className="mt-0 border-0 p-0 h-full"
                 >
-                  <div className="flex flex-col h-full w-full">
-                    <Suspense
-                      fallback={
-                        <div className="flex items-center space-x-4">
-                          <Skeleton className="h-12 w-12 rounded-full" />
-                          <div className="space-y-2">
-                            <Skeleton className="h-4 w-[250px]" />
-                            <Skeleton className="h-4 w-[200px]" />
-                          </div>
-                        </div>
-                      }
-                    >
-                      <Editor />
-                    </Suspense>
-
-                    <div className="flex items-center space-x-2">
-                      <Button>Submit</Button>
-                      <Button variant="secondary">
-                        <span className="sr-only">Show history</span>
-                        <History className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </TabsContent>
-                <TabsContent value="insert" className="mt-0 border-0 p-0">
-                  <div className="flex flex-col space-y-4">
-                    <div className="grid h-full grid-rows-2 gap-6 lg:grid-cols-2 lg:grid-rows-1">
-                      <Textarea
-                        placeholder="We're writing to [inset]. Congrats from OpenAI!"
-                        className="h-full min-h-[300px] lg:min-h-[700px] xl:min-h-[700px]"
-                      />
-                      <div className="rounded-md border bg-muted"></div>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Button>Submit</Button>
-                      <Button variant="secondary">
-                        <span className="sr-only">Show history</span>
-                        <History className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </TabsContent>
-                <TabsContent value="edit" className="mt-0 border-0 p-0">
-                  <div className="flex flex-col space-y-4">
-                    <div className="grid h-full gap-6 lg:grid-cols-2">
-                      <div className="flex flex-col space-y-4">
-                        <div className="flex flex-1 flex-col space-y-2">
-                          <Label htmlFor="input">Input</Label>
-                          <Textarea
-                            id="input"
-                            placeholder="We is going to the market."
-                            className="flex-1 lg:min-h-[580px]"
-                          />
-                        </div>
-                        <div className="flex flex-col space-y-2">
-                          <Label htmlFor="instructions">Instructions</Label>
-                          <Textarea
-                            id="instructions"
-                            placeholder="Fix the grammar."
-                          />
-                        </div>
-                      </div>
-                      <div className="mt-[21px] min-h-[400px] rounded-md border bg-muted lg:min-h-[700px]" />
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Button>Submit</Button>
-                      <Button variant="secondary">
-                        <span className="sr-only">Show history</span>
-                        <History className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
+                  <Editor />
                 </TabsContent>
               </div>
             </div>

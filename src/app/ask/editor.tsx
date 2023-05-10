@@ -17,6 +17,10 @@ import { Color } from '@tiptap/extension-color';
 import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
 import EditorMenuBar from './editor-menu-bar';
+import './code-editor-buttons.css';
+import { Textarea } from '@/components/textarea';
+import { Button } from '@/components/button';
+import { History, Trash } from 'lucide-react';
 
 lowlight.registerLanguage('html', html);
 lowlight.registerLanguage('css', css);
@@ -25,11 +29,13 @@ lowlight.registerLanguage('ts', ts);
 
 export default function Editor() {
   const [input, setInput] = useState('');
+  const [title, setTitle] = useState('');
   const [language, setLanguage] = useState('typescript');
 
   const editor = useEditor({
     onUpdate: ({ editor }) => {
       const json = editor.getHTML();
+      setInput(json);
       //   localStorage.setItem(`content`, json);
     },
     extensions: [
@@ -62,122 +68,42 @@ export default function Editor() {
   }
 
   return (
-    <div className="flex flex-col h-full editor-content-parent">
-      <EditorMenuBar editor={editor} />
-      <EditorContent content={input} editor={editor} />
+    <div className="flex flex-col h-full w-full">
+      <div className="flex flex-col h-full editor-content-parent">
+        <EditorMenuBar editor={editor} />
+        <input
+          className="flex flex-grow font-bold text-2xl border-2 border-b-0 p-4 mt-2 bg-transparent"
+          placeholder="Give it a title!"
+          value={title}
+          maxLength={100}
+          onChange={(e) => setTitle(e.target.value)}
+          style={{ wordWrap: 'break-word' }}
+        />
+        <EditorContent content={input} editor={editor} />
+      </div>
+
+      <div className="flex items-center space-x-2 my-4">
+        <Button className="px-8 py-6" disabled={!title || !input}>
+          Submit
+        </Button>
+        <Button
+          className="px-8 py-6"
+          disabled={!title || !input}
+          variant="destructive"
+          onClick={() => {
+            setTitle('');
+            editor.commands.clearContent();
+            setInput('');
+          }}
+        >
+          <span className="mr-2">Trash</span>
+          <Trash className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }
 
 const MenuBar = ({ editor }: { editor: EditorType }) => {
-  return (
-    <div className="flex border p-2 ">
-      <button
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-        disabled={!editor.can().chain().focus().toggleStrike().run()}
-        className={editor.isActive('strike') ? 'is-active' : ''}
-      >
-        strike
-      </button>
-
-      <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-        clear marks
-      </button>
-      <button onClick={() => editor.chain().focus().clearNodes().run()}>
-        clear nodes
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setParagraph().run()}
-        className={editor.isActive('paragraph') ? 'is-active' : ''}
-      >
-        paragraph
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
-      >
-        h1
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
-      >
-        h2
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
-      >
-        h3
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
-      >
-        h4
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
-      >
-        h5
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
-      >
-        h6
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={editor.isActive('bulletList') ? 'is-active' : ''}
-      >
-        bullet list
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={editor.isActive('orderedList') ? 'is-active' : ''}
-      >
-        ordered list
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        className={editor.isActive('codeBlock') ? 'is-active' : ''}
-      >
-        code block
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={editor.isActive('blockquote') ? 'is-active' : ''}
-      >
-        blockquote
-      </button>
-      <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-        horizontal rule
-      </button>
-      <button onClick={() => editor.chain().focus().setHardBreak().run()}>
-        hard break
-      </button>
-      <button
-        onClick={() => editor.chain().focus().undo().run()}
-        disabled={!editor.can().chain().focus().undo().run()}
-      >
-        undo
-      </button>
-      <button
-        onClick={() => editor.chain().focus().redo().run()}
-        disabled={!editor.can().chain().focus().redo().run()}
-      >
-        redo
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setColor('#958DF1').run()}
-        className={
-          editor.isActive('textStyle', { color: '#958DF1' }) ? 'is-active' : ''
-        }
-      >
-        purple
-      </button>
-    </div>
-  );
+  return <div className="flex border p-2 "></div>;
 };

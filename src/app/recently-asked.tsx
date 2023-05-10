@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { db } from '../../prisma/prisma';
 import UserAvatar from '@/components/user-avatar';
+import { formatTime } from '@/lib/utils';
 
 export default async function RecentlyAsked() {
   const questions = await db.post.findMany({
@@ -58,8 +59,8 @@ export default async function RecentlyAsked() {
               </div>
               <div className="flex items-center space-x-4 mt-auto py-4">
                 <span className="text-gray-600">
-                  {question.updatedAt.toISOString() ??
-                    question.createdAt.toISOString()}
+                  {formatTime(question.updatedAt.toISOString()) ??
+                    formatTime(question.createdAt.toISOString())}
                 </span>
               </div>
               <div className="col-span-3 w-fit flex justify-end items-center ">

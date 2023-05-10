@@ -34,6 +34,7 @@
     --ring: 215 20.2% 65.1%;
 
     --radius: 0.5rem;
+    --code-background: rgb(15, 22, 32);
   }
 
   .dark {
@@ -67,6 +68,7 @@
     --ring: 216 34% 17%;
 
     --radius: 0.5rem;
+    --code-background: rgb(30, 41, 59);
   }
 }
 
@@ -82,5 +84,17 @@
 html,
 body {
   height: 100%;
-  background-color: var(--background);
+  background-color: hsl(var(--background));
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+  font-size: revert;
+  font-weight: revert;
 }

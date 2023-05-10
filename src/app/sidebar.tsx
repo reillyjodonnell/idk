@@ -1,18 +1,23 @@
 import {
+  Home,
   LayoutGrid,
   Library,
   ListMusic,
   Mic2,
   Music,
   Music2,
+  Pencil,
   PlayCircle,
   Radio,
+  Tags,
   User,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/button';
 import { ScrollArea } from '@/components/scroll-area';
+import Tag from '@/components/tag';
+import Link from 'next/link';
 
 // import { Playlist } from '../data/playlists';
 
@@ -34,64 +39,82 @@ export function Sidebar({ className, playlists }: SidebarProps) {
               size="sm"
               className="w-full justify-start"
             >
-              <PlayCircle className="mr-2 h-4 w-4" />
-              Listen Now
+              <Link className="flex justify-start items-center w-full" href="/">
+                <Home className="mr-2 h-4 w-4" />
+                Home
+              </Link>
             </Button>
             <Button variant="ghost" size="sm" className="w-full justify-start">
-              <LayoutGrid className="mr-2 h-4 w-4" />
-              Browse
+              <Link
+                className="flex justify-start items-center w-full"
+                href="/browse"
+              >
+                <LayoutGrid className="mr-2 h-4 w-4" />
+                Browse
+              </Link>
             </Button>
             <Button variant="ghost" size="sm" className="w-full justify-start">
-              <Radio className="mr-2 h-4 w-4" />
-              Radio
+              <Link
+                className="flex justify-start items-center w-full"
+                href="/ask"
+              >
+                <Pencil className="mr-2 h-4 w-4" />
+                Ask
+              </Link>
             </Button>
           </div>
         </div>
         <div className="px-4 py-2">
           <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
-            Library
+            Popular
           </h2>
           <div className="space-y-1">
             <Button variant="ghost" size="sm" className="w-full justify-start">
-              <ListMusic className="mr-2 h-4 w-4" />
-              Playlists
+              <Link
+                className="flex justify-start items-center w-full"
+                href="/questions/categories/javascript"
+              >
+                <Tags className="mr-2 h-4 w-4" />
+                JavaScript
+              </Link>
             </Button>
             <Button variant="ghost" size="sm" className="w-full justify-start">
-              <Music2 className="mr-2 h-4 w-4" />
-              Songs
+              <Link
+                className="flex justify-start items-center w-full"
+                href="/questions/categories/angular"
+              >
+                <Tags className="mr-2 h-4 w-4" />
+                Angular
+              </Link>
             </Button>
             <Button variant="ghost" size="sm" className="w-full justify-start">
-              <User className="mr-2 h-4 w-4" />
-              Made for You
+              <Link
+                className="flex justify-start items-center w-full"
+                href="/questions/categories/react"
+              >
+                <Tags className="mr-2 h-4 w-4" />
+                React
+              </Link>
             </Button>
             <Button variant="ghost" size="sm" className="w-full justify-start">
-              <Mic2 className="mr-2 h-4 w-4" />
-              Artists
+              <Link
+                className="flex justify-start items-center w-full"
+                href="/questions/categories/typescript"
+              >
+                <Tags className="mr-2 h-4 w-4" />
+                TypeScript
+              </Link>
             </Button>
             <Button variant="ghost" size="sm" className="w-full justify-start">
-              <Library className="mr-2 h-4 w-4" />
-              Albums
+              <Link
+                className="flex justify-start items-center w-full"
+                href="/questions/categories/next"
+              >
+                <Tags className="mr-2 h-4 w-4" />
+                Next
+              </Link>
             </Button>
           </div>
-        </div>
-        <div className="py-2">
-          <h2 className="relative px-6 text-lg font-semibold tracking-tight">
-            Playlists
-          </h2>
-          <ScrollArea className="h-[300px] px-2">
-            <div className="space-y-1 p-2">
-              {/* {playlists?.map((playlist) => (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="w-full justify-start font-normal"
-                >
-                  <ListMusic className="mr-2 h-4 w-4" />
-                  {playlist}
-                </Button>
-              ))} */}
-            </div>
-          </ScrollArea>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import UserAvatar from '@/components/user-avatar';
 import Comment from '@/components/comment';
 import Tag from '@/components/tag';
 import { Tags } from 'lucide-react';
+import { formatTime } from '@/lib/utils';
 
 export default async function Page({ params }: any) {
   const data = await db.post.findUniqueOrThrow({
@@ -40,6 +41,7 @@ export default async function Page({ params }: any) {
       },
     },
   });
+
   if (!data) {
     return null;
   }
@@ -53,7 +55,8 @@ export default async function Page({ params }: any) {
       </Link>
       <span>@{data.author.username}</span>
       <span>
-        {data.updatedAt.toISOString() ?? data.createdAt.toISOString()}
+        {formatTime(data.updatedAt.toISOString()) ??
+          formatTime(data.createdAt.toISOString())}
       </span>
       <span className="font-bold text-2xl">{data.title}</span>
 

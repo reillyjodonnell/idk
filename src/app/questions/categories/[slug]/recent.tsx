@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/button';
 import { Tags } from 'lucide-react';
-import { capitalizeFirstLetter } from '@/lib/utils';
+import { capitalizeFirstLetter, formatTime } from '@/lib/utils';
 
 export default async function Recent({ slug }: { slug: string }) {
   const questions = await db.post.findMany({
@@ -74,8 +74,8 @@ export default async function Recent({ slug }: { slug: string }) {
             </div>
             <div className="flex items-center space-x-4 mt-auto py-4">
               <span className="text-gray-600">
-                {question.updatedAt.toISOString() ??
-                  question.createdAt.toISOString()}
+                {formatTime(question.updatedAt.toISOString()) ??
+                  formatTime(question.createdAt.toISOString())}
               </span>
             </div>
             <div className="col-span-3 w-fit flex justify-end items-center ">

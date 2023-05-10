@@ -14,7 +14,7 @@ export default function CodeEditorButtons() {
   return (
     <NodeViewWrapper className="code-block">
       <Select defaultValue="typescript">
-        <SelectTrigger className="w-36 h-8 absolute inset-1 z-10 bg-white">
+        <SelectTrigger className="w-36 h-8 absolute inset-1 z-10 bg-[#bebebe11] border-2 border-gray-400 text-white active:border-white">
           <SelectValue placeholder="Select language" />
         </SelectTrigger>
         <SelectContent>

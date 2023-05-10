@@ -15,99 +15,141 @@ import {
   MenubarTrigger,
 } from '@/components/menubar';
 import type { Editor as EditorType } from '@tiptap/react';
-import { Bold, Code, Code2, Italic } from 'lucide-react';
+import {
+  Bold as BoldIcon,
+  Braces,
+  Code,
+  Code2,
+  Heading1,
+  Heading2,
+  Heading3,
+  Italic,
+  List,
+  ListOrdered,
+  Quote,
+  Redo,
+  Type,
+  Undo,
+} from 'lucide-react';
 
 export default function EditorMenuBar({ editor }: { editor: EditorType }) {
+  if (!editor) {
+    return null;
+  }
   return (
-    <Menubar>
+    <Menubar className="p-0">
       <MenubarMenu>
-        <button
+        <Button
+          variant={'outline'}
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editor.can().chain().focus().toggleBold().run()}
           className={editor.isActive('bold') ? 'is-active' : ''}
         >
-          <Bold />
-        </button>
-        <button
+          <BoldIcon />
+        </Button>
+        <Button
+          variant={'outline'}
           onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={!editor.can().chain().focus().toggleItalic().run()}
           className={editor.isActive('italic') ? 'is-active' : ''}
         >
           <Italic />
-        </button>
-        <button
+        </Button>
+        <Button
+          variant={'outline'}
           onClick={() => editor.chain().focus().toggleCode().run()}
           disabled={!editor.can().chain().focus().toggleCode().run()}
           className={editor.isActive('code') ? 'is-active' : ''}
         >
           <Code />
-        </button>
-        <button
+        </Button>
+
+        <Button
+          variant={'outline'}
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
           className={editor.isActive('codeBlock') ? 'is-active' : ''}
         >
-          <Code2 />
-        </button>
-      </MenubarMenu>
-      <MenubarMenu>
-        <MenubarTrigger>Edit</MenubarTrigger>
-        <MenubarContent>
-          <MenubarItem>
-            Undo <MenubarShortcut>⌘Z</MenubarShortcut>
-          </MenubarItem>
-          <MenubarItem>
-            Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>
-          </MenubarItem>
-          <MenubarSeparator />
-          <MenubarSub>
-            <MenubarSubTrigger>Find</MenubarSubTrigger>
-            <MenubarSubContent>
-              <MenubarItem>Search the web</MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem>Find...</MenubarItem>
-              <MenubarItem>Find Next</MenubarItem>
-              <MenubarItem>Find Previous</MenubarItem>
-            </MenubarSubContent>
-          </MenubarSub>
-          <MenubarSeparator />
-          <MenubarItem>Cut</MenubarItem>
-          <MenubarItem>Copy</MenubarItem>
-          <MenubarItem>Paste</MenubarItem>
-        </MenubarContent>
-      </MenubarMenu>
-      <MenubarMenu>
-        <MenubarTrigger>View</MenubarTrigger>
-        <MenubarContent>
-          <MenubarCheckboxItem>Always Show Bookmarks Bar</MenubarCheckboxItem>
-          <MenubarCheckboxItem checked>
-            Always Show Full URLs
-          </MenubarCheckboxItem>
-          <MenubarSeparator />
-          <MenubarItem inset>
-            Reload <MenubarShortcut>⌘R</MenubarShortcut>
-          </MenubarItem>
-          <MenubarItem disabled inset>
-            Force Reload <MenubarShortcut>⇧⌘R</MenubarShortcut>
-          </MenubarItem>
-          <MenubarSeparator />
-          <MenubarItem inset>Toggle Fullscreen</MenubarItem>
-          <MenubarSeparator />
-          <MenubarItem inset>Hide Sidebar</MenubarItem>
-        </MenubarContent>
-      </MenubarMenu>
-      <MenubarMenu>
-        <MenubarTrigger>Profiles</MenubarTrigger>
-        <MenubarContent>
-          <MenubarRadioGroup value="benoit">
-            <MenubarRadioItem value="andy">Andy</MenubarRadioItem>
-            <MenubarRadioItem value="benoit">Benoit</MenubarRadioItem>
-            <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>
-          </MenubarRadioGroup>
-          <MenubarSeparator />
-          <MenubarItem inset>Edit...</MenubarItem>
-          <MenubarSeparator />
-          <MenubarItem inset>Add Profile...</MenubarItem>
-        </MenubarContent>
+          <Braces />
+        </Button>
+
+        <Button
+          variant={'outline'}
+          onClick={() => editor.chain().focus().setParagraph().run()}
+          className={editor.isActive('paragraph') ? 'is-active' : ''}
+        >
+          <Type />
+        </Button>
+        <Button
+          variant={'outline'}
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 1 }).run()
+          }
+          className={
+            editor.isActive('heading', { level: 1 }) ? 'is-active' : ''
+          }
+        >
+          <Heading1 />
+        </Button>
+        <Button
+          variant={'outline'}
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 2 }).run()
+          }
+          className={
+            editor.isActive('heading', { level: 2 }) ? 'is-active' : ''
+          }
+        >
+          <Heading2 />
+        </Button>
+        <Button
+          variant={'outline'}
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 3 }).run()
+          }
+          className={
+            editor.isActive('heading', { level: 3 }) ? 'is-active' : ''
+          }
+        >
+          <Heading3 />
+        </Button>
+
+        <Button
+          variant={'outline'}
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          className={editor.isActive('bulletList') ? 'is-active' : ''}
+        >
+          <List />
+        </Button>
+        <Button
+          variant={'outline'}
+          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          className={editor.isActive('orderedList') ? 'is-active' : ''}
+        >
+          <ListOrdered />
+        </Button>
+
+        <Button
+          variant={'outline'}
+          onClick={() => editor.chain().focus().toggleBlockquote().run()}
+          className={editor.isActive('blockquote') ? 'is-active' : ''}
+        >
+          <Quote />
+        </Button>
+
+        <Button
+          variant={'outline'}
+          onClick={() => editor.chain().focus().undo().run()}
+          disabled={!editor.can().chain().focus().undo().run()}
+        >
+          <Undo />
+        </Button>
+        <Button
+          variant={'outline'}
+          onClick={() => editor.chain().focus().redo().run()}
+          disabled={!editor.can().chain().focus().redo().run()}
+        >
+          <Redo />
+        </Button>
       </MenubarMenu>
     </Menubar>
   );

@@ -2,6 +2,7 @@ import type { Comment } from '@prisma/client';
 import UserAvatar from './user-avatar';
 import Link from 'next/link';
 import ReactionPopover from './reaction-popover';
+import { formatTime } from '@/lib/utils';
 
 type CommentType = Pick<
   Comment,
@@ -37,7 +38,8 @@ export default function Comment(props: CommentType) {
             </span>
           </Link>
           <span className="ml-auto">
-            {props.updatedAt.toISOString() ?? props.createdAt.toISOString()}
+            {formatTime(props.updatedAt.toISOString()) ??
+              formatTime(props.createdAt.toISOString())}
           </span>
         </div>
       </div>
