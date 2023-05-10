@@ -61,7 +61,7 @@ export default async function Recent({ slug }: { slug: string }) {
                   className=" w-10 h-10 rounded-full bg-green-500 object-cover "
                 />
               </div>
-              <Link href={`/questions/${id}`}>
+              <Link href={`/questions/${question.id}`}>
                 <h4 className=" font-medium hover:underline">
                   {question.title}
                 </h4>

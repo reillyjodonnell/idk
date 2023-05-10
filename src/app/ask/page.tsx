@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import { History, Terminal, X } from 'lucide-react';
 
@@ -13,10 +15,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/tabs';
 import { Textarea } from '@/components/textarea';
 import Header from '@/components/header';
 import AlertComponent from '@/client-components/alert';
-export const metadata: Metadata = {
-  title: 'Playground',
-  description: 'The OpenAI Playground built using the components.',
-};
+import Editor from './editor';
+import { Suspense } from 'react';
+import { Skeleton } from '@/components/skeleton';
+
+// export const metadata: Metadata = {
+//   title: 'Playground',
+//   description: 'The OpenAI Playground built using the components.',
+// };
 
 export default function Page() {
   return (
@@ -38,7 +44,6 @@ export default function Page() {
         </div>
 
         <Separator />
-        <AlertComponent />
         <Tabs defaultValue="complete" className="flex-1">
           <div className="container h-full py-6">
             <div className="grid h-full items-stretch gap-6 md:grid-cols-[1fr_200px]">
@@ -77,13 +82,26 @@ export default function Page() {
                 <MaxLengthSelector defaultValue={[256]} />
                 <TopPSelector defaultValue={[0.9]} /> */}
               </div>
-              <div className="md:order-1">
-                <TabsContent value="complete" className="mt-0 border-0 p-0">
-                  <div className="flex h-full flex-col space-y-4">
-                    <Textarea
-                      placeholder="I'm experiencing a bug with the app. Here's the relevant code:"
-                      className="min-h-[400px] flex-1 p-4 md:min-h-[700px] lg:min-h-[700px]"
-                    />
+              <div className="md:order-1 h-full">
+                <TabsContent
+                  value="complete"
+                  className="mt-0 border-0 p-0 h-full"
+                >
+                  <div className="flex flex-wrap h-full w-full">
+                    <Suspense
+                      fallback={
+                        <div className="flex items-center space-x-4">
+                          <Skeleton className="h-12 w-12 rounded-full" />
+                          <div className="space-y-2">
+                            <Skeleton className="h-4 w-[250px]" />
+                            <Skeleton className="h-4 w-[200px]" />
+                          </div>
+                        </div>
+                      }
+                    >
+                      <Editor />
+                    </Suspense>
+
                     <div className="flex items-center space-x-2">
                       <Button>Submit</Button>
                       <Button variant="secondary">
