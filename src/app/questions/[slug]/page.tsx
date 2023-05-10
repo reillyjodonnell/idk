@@ -5,6 +5,11 @@ import Comment from '@/components/comment';
 import Tag from '@/components/tag';
 import { Tags } from 'lucide-react';
 import { formatTime } from '@/lib/utils';
+import Editor from '@/app/ask/editor';
+import { EditorContent } from '@tiptap/react';
+import FormattedContent from './formatted-content';
+import { Input } from '@/components/input';
+import { Button } from '@/components/button';
 
 export default async function Page({ params }: any) {
   const data = await db.post.findUniqueOrThrow({
@@ -49,7 +54,7 @@ export default async function Page({ params }: any) {
   const userId = 0;
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center p-10">
       {/* <Link href={`users/${userId}`}> */}
       <UserAvatar size="xl" alt="" src={data.author.avatar ?? ''} />
       {/* </Link> */}
@@ -68,9 +73,9 @@ export default async function Page({ params }: any) {
       </div>
 
       <div>
-        <span className="">{data.body}</span>
+        <FormattedContent content={data.body} title={data.title} />
       </div>
-      <div>
+      <div className="w-full">
         {data.comments.length > 0 ? (
           <>
             <div className="flex my-4">
@@ -97,6 +102,16 @@ export default async function Page({ params }: any) {
         ) : (
           <span>No comments yet 🥲</span>
         )}
+        <div className="flex w-full my-12 items-center space-x-2">
+          <Input
+            type="text"
+            className="py-6 text-base"
+            placeholder="Write a response..."
+          />
+          <Button className="px-8 py-6" type="submit">
+            Comment
+          </Button>
+        </div>
       </div>
     </div>
   );

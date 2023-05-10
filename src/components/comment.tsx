@@ -27,13 +27,13 @@ export default function Comment(props: CommentType) {
         <UserAvatar
           src={props.avatar}
           alt={`${props.username}'s avatar`}
-          size="md"
+          size="lg"
         />
         {/* </Link> */}
 
-        <div className="flex justify-center items-center w-full">
+        <div className="flex justify-center items-center w-full px-2">
           {/* <Link href={`users/${props.authorId}`}> */}
-          <span className="font-semibold hover:underline">
+          <span className="font-semibold hover:underline cursor-pointer text-lg ">
             {props.username}
           </span>
           {/* </Link> */}

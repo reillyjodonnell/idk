@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import Logo from './logo';
 import { usePathname } from 'next/navigation';
 
 export function MainNav({
@@ -24,7 +23,7 @@ export function MainNav({
         Ask
       </Link>
       <Link
-        href="/questions/categories/react"
+        href="/questions/"
         className={cn(
           'text-sm font-medium text-muted-foreground transition-colors hover:text-primary',
           pathname.includes('categories') && 'text-primary'

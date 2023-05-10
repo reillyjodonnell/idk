@@ -120,18 +120,18 @@ export function TagSelector<TData, TValue>({
         {selectedValues.length > 0 ? (
           selectedValues.map((value) => (
             <Badge
-              className="w-fit flex-wrap relative px-4 py-1 mx-1 my-1"
+              className="w-fit flex-wrap relative px-6 py-2 mx-1 my-1"
               key={value}
-              variant="default"
+              variant="outline"
             >
-              {value}
+              <span className="font-semibold px-2">{value}</span>
               <X
                 onClick={() =>
                   setSelectedValues((prev) =>
                     prev.filter((item) => item !== value)
                   )
                 }
-                className="w-4 h-4 ml-1 stroke-[2px] cursor-pointer"
+                className="w-4 h-4 stroke-[2px] cursor-pointer"
               />
             </Badge>
           ))

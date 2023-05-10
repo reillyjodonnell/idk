@@ -1,0 +1,7 @@
+.ProseMirror {
+  border: none;
+  background-color: transparent;
+}
+
+/* border: 2px solid hsl(var(--border));
+background-color: hsl(var(--accent)); */

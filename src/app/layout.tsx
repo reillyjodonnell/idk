@@ -2,6 +2,7 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { Providers } from './providers';
 import Header from '@/components/header';
+import { Sidebar } from './sidebar';
 // import './prism-dracula.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -22,8 +23,10 @@ export default function RootLayout({
         <Providers>
           <div className="  dark:bg-black w-full h-full ">
             <Header />
-
-            {children}
+            <main className="flex w-full h-full dark:bg-black bg-white">
+              <Sidebar className="w-1/5 border-r " playlists={[]} />
+              {children}
+            </main>
           </div>
         </Providers>
       </body>

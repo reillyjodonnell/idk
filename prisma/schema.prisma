@@ -24,20 +24,19 @@ model User {
 }
 
 model Post {
-  id         Int         @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   title      String
   body       String
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  author     User        @relation(fields: [authorId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  author     User      @relation(fields: [authorId], references: [id])
   authorId   String
-  thumbsUp   Int         @default(0)
-  thumbsDown Int         @default(0)
-  fire       Int         @default(0)
-  eyes       Int         @default(0)
+  thumbsUp   Int       @default(0)
+  thumbsDown Int       @default(0)
+  fire       Int       @default(0)
+  eyes       Int       @default(0)
   comments   Comment[]
-  tags       Tag[]       @relation("PostToTag")
-  PostToTag  PostToTag[]
+  tags       Tag[]     @relation("PostToTag")
 }
 
 model Comment {
@@ -56,19 +55,7 @@ model Comment {
 }
 
 model Tag {
-  id        Int         @id @default(autoincrement())
-  name      String      @unique
-  posts     Post[]      @relation("PostToTag")
-  PostToTag PostToTag[]
-}
-
-// Create a new model for the many-to-many relationship between Post and Tag
-model PostToTag {
-  id     Int  @id @default(autoincrement())
-  postId Int
-  tagId  Int
-  post   Post @relation(fields: [postId], references: [id])
-  tag    Tag  @relation(fields: [tagId], references: [id])
-
-  @@unique([postId, tagId])
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  posts Post[] @relation("PostToTag")
 }
