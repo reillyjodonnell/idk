@@ -3,7 +3,7 @@ import { Button } from './button';
 
 export default function Tag({ name }: { name: string }) {
   return (
-    <Link href={`/questions/categories/${name}`}>
+    <Link href={`/browse/${name}`}>
       <Button
         className="whitespace-nowrap mx-1 mb-1"
         variant="outline"

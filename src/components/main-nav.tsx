@@ -22,15 +22,15 @@ export function MainNav({
       >
         Ask
       </Link>
-      <Link
-        href="/questions/"
+      {/* <Link
+        href="/categories"
         className={cn(
           'text-sm font-medium text-muted-foreground transition-colors hover:text-primary',
           pathname.includes('categories') && 'text-primary'
         )}
       >
         Categories
-      </Link>
+      </Link> */}
       <Link
         href="/browse"
         className={cn(

@@ -18,13 +18,46 @@ import {
 } from '@/components/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/tabs';
 import { Input } from '@/components/input';
+import { db } from '../../../prisma/prisma';
+import Search from './search';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
   description: 'Example dashboard app using the components.',
 };
 
-export default function DashboardPage() {
+export default async function DashboardPage({
+  params,
+  searchParams,
+}: {
+  params: any;
+  searchParams: any;
+}) {
+  console.log(params);
+  console.log(searchParams);
+  const search = searchParams?.search ?? '';
+  const page = Number(searchParams?.page ?? 1);
+  const limit = 20;
+  const offset = (page - 1) * limit;
+
+  const posts =
+    search !== ''
+      ? await db.post.findMany({
+          where: {
+            OR: [
+              { title: { contains: search, mode: 'insensitive' } },
+              { body: { contains: search, mode: 'insensitive' } },
+            ],
+          },
+          take: limit,
+        })
+      : [];
+
+  const totalPosts = Math.ceil(posts.length / limit);
+  const hasNextPage = page < totalPosts;
+  const hasPreviousPage = page > 1;
+
   return (
     <>
       <div className="md:hidden">
@@ -43,13 +76,13 @@ export default function DashboardPage() {
           className="hidden dark:block"
         />
       </div>
-      <div className="hidden flex-col md:flex">
+      <div className="hidden flex-col md:flex w-full">
         <div className="border-b">
           <div className="flex h-16 items-center px-4">
             <div className="ml-auto flex items-center space-x-4"></div>
           </div>
         </div>
-        <div className="flex-1 space-y-4 p-8 pt-6">
+        <div className="flex-1 space-y-4 p-8 pt-6 w-full">
           <div className="flex items-center justify-between space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">Browse</h2>
             <div className="flex items-center space-x-2">
@@ -61,23 +94,39 @@ export default function DashboardPage() {
           </div>
           <Tabs defaultValue="overview" className="space-y-4">
             <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="overview">All</TabsTrigger>
               <TabsTrigger value="analytics" disabled>
-                Analytics
+                Recent
               </TabsTrigger>
               <TabsTrigger value="reports" disabled>
-                Reports
-              </TabsTrigger>
-              <TabsTrigger value="notifications" disabled>
-                Notifications
+                Popular
               </TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
-              <div className="flex justify-center items-center">
-                <Input
-                  placeholder="Filter tasks..."
-                  className="h-8 w-full lg:w-[350px]"
-                />
+              <div className="flex justify-center items-center relative">
+                <Search />
+                {search !== '' ? (
+                  <div className="absolute max-h-80 h-fit w-full lg:w-[450px] z-20 overflow-y-scroll top-[100%] flex flex-col bg-background border p-4">
+                    {posts.length > 0 ? (
+                      posts.map((post) => (
+                        <Link key={post.id} href={`/questions/${post.id}`}>
+                          <div className="my-1 p-2 hover:bg-secondary rounded-md">
+                            <div>
+                              <span className="font-semibold text-base">
+                                {post.title}
+                              </span>
+                            </div>
+                            <span className="text-md text-overflow-ellipsis overflow-hidden">
+                              {post.body}
+                            </span>
+                          </div>
+                        </Link>
+                      ))
+                    ) : (
+                      <span>No results</span>
+                    )}
+                  </div>
+                ) : null}
               </div>
 
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

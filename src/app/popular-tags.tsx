@@ -22,7 +22,7 @@ export default function PopularTags({
         >
           <Link
             className="flex justify-start items-center w-full"
-            href={`/questions/categories/${tag.name}`}
+            href={`/browse/${tag.name}`}
           >
             <Tags className="mr-2 h-4 w-4" />
             {capitalizeFirstLetter(tag.name)}

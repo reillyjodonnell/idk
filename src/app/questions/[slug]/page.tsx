@@ -54,7 +54,7 @@ export default async function Page({ params }: any) {
   const userId = 0;
 
   return (
-    <div className="flex flex-col justify-center items-center p-10">
+    <div className="flex flex-col justify-start items-center p-10">
       {/* <Link href={`users/${userId}`}> */}
       <UserAvatar size="xl" alt="" src={data.author.avatar ?? ''} />
       {/* </Link> */}

@@ -1,4 +1,4 @@
-import { db } from '../../../../../prisma/prisma';
+import { db } from '../../../../prisma/prisma';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/button';
@@ -93,7 +93,7 @@ export default async function Popular({ slug }: { slug: string }) {
                 }}
               >
                 {question.tags.slice(0, 2).map(({ name, id }) => (
-                  <Link key={id} href={`/questions/categories/${name}`}>
+                  <Link key={id} href={`/browse/${name}`}>
                     <Button
                       className="whitespace-nowrap mx-1 mb-1"
                       variant="outline"

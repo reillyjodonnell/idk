@@ -1,6 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { Providers } from './providers';
+import LayoutInterceptor from './layout-interceptor';
 import Header from '@/components/header';
 import { Sidebar } from './sidebar';
 // import './prism-dracula.css';
@@ -21,13 +22,19 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <Providers>
-          <div className="  dark:bg-black w-full h-full ">
-            <Header />
-            <main className="flex w-full h-full dark:bg-black bg-white">
-              <Sidebar className="w-1/5 border-r " playlists={[]} />
-              {children}
-            </main>
-          </div>
+          <LayoutInterceptor
+            wrapper={
+              <>
+                <Header />
+                <main className="flex w-full h-full dark:bg-black bg-white">
+                  <Sidebar className="w-1/5 border-r " />
+                  {children}
+                </main>
+              </>
+            }
+          >
+            {children}
+          </LayoutInterceptor>
         </Providers>
       </body>
     </html>

@@ -19,7 +19,7 @@ export default function Home() {
           Get help from our friendly community & AI at the click of a button!
         </h1>
         <Link href={'/ask'}>
-          <Button className="px-8 py-6">
+          <Button className="px-8 py-6 bg-primary">
             <Pencil className="mr-2 h-4 w-4" /> Ask a question
           </Button>
         </Link>
