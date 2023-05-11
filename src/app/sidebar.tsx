@@ -26,15 +26,15 @@ export async function Sidebar({ className, playlists }: SidebarProps) {
   });
 
   return (
-    <div className={cn('pb-12', className)}>
+    <div className={cn('pb-12 p-8', className)}>
       <div className="space-y-4 py-4">
-        <div className="px-4 py-2">
+        <div className="py-2">
           <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
             Discover
           </h2>
           <Discover />
         </div>
-        <div className="px-4 py-2">
+        <div className=" py-2">
           <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
             Popular
           </h2>

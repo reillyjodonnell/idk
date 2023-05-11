@@ -10,7 +10,7 @@ export default function Home() {
     // <div className="  dark:bg-black w-full h-full ">
     //   <Header className="py-2" />
 
-    <section className="flex h-full flex-col items-center justify-center flex-1">
+    <section className="flex h-full flex-col items-center justify-start flex-1">
       <div className="flex flex-col justify-center items-center my-20">
         <h1 className="text-3xl w-3/5 text-center font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl lg:leading-[1.1] hidden md:block">
           Feeling stuck?

@@ -6,7 +6,7 @@ import { capitalizeFirstLetter } from '@/lib/utils';
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
   return (
-    <div className="w-full flex flex-col justify-center items-center p-8 ">
+    <div className="w-full flex flex-col justify-start items-center p-8 ">
       <span className="p-4 font-bold text-2xl">
         {capitalizeFirstLetter(slug)}
       </span>

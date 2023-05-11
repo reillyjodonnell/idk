@@ -12,24 +12,26 @@ export default function Header({ className = '' }: { className?: string }) {
   return (
     <header
       className={cn(
-        `py-2 flex justify-center items-center supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b bg-background/95 shadow-sm backdrop-blur`,
+        `py-2 px-8 flex justify-center items-center supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b bg-background/95 shadow-sm backdrop-blur`,
         className
       )}
     >
       <Logo />
       <MainNav />
-      {user ? (
-        <Avatar className="mx-6 h-8 w-8">
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-      ) : (
-        <Link href="/login">
-          <Button className="mx-6 h-8">Login</Button>
-        </Link>
-      )}
+      <div className="flex justify-center items-center ml-auto">
+        {user ? (
+          <Avatar className="mx-6 h-8 w-8">
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+        ) : (
+          <Link href="/login">
+            <Button className="mx-6 h-8">Login</Button>
+          </Link>
+        )}
 
-      <ModeToggle />
+        <ModeToggle />
+      </div>
     </header>
   );
 }
