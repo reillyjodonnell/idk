@@ -100,7 +100,9 @@ export default async function Page({ params }: any) {
             ))}
           </>
         ) : (
-          <span>No comments yet 🥲</span>
+          <div className="flex my-6">
+            <span className="font-semibold text-xl">No comments yet 🥲</span>
+          </div>
         )}
         <div className="flex w-full my-12 items-center space-x-2">
           <Input

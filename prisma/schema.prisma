@@ -35,6 +35,7 @@ model Post {
   thumbsDown Int       @default(0)
   fire       Int       @default(0)
   eyes       Int       @default(0)
+  views      Int       @default(0)
   comments   Comment[]
   tags       Tag[]     @relation("PostToTag")
 }
