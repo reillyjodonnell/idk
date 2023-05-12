@@ -13,17 +13,18 @@ function generateSessionId() {
 type RegisterForm = {
   password: string;
   email: string;
+  username: string;
 };
 type LoginForm = {
   email: string;
   password: string;
 };
-export async function register({ password, email }: RegisterForm) {
+export async function register({ password, email, username }: RegisterForm) {
   const passwordHash = await bcrypt.hash(password, 10);
   const user = await db.user.create({
-    data: { password: passwordHash, email },
+    data: { password: passwordHash, email, username },
   });
-  return { id: user.id, email };
+  return { id: user.id, email, username };
 }
 
 export async function login({ password, email }: LoginForm) {

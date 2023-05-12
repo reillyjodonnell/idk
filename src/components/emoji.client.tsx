@@ -46,7 +46,7 @@ export default function Emoji({
         router.refresh();
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       toast({
         variant: 'destructive',
         title: 'Uh oh! Something went wrong.',

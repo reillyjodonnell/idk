@@ -6,11 +6,13 @@ export async function POST(request: NextRequest) {
   const res = await request.json();
   const email = res?.email;
   const password = res?.password;
+  const username = res?.username;
 
-  if (!email || !password) {
-    return new Response(`No ${email ? 'password' : 'email'} provided!`, {
+  if (!email || !password || !username) {
+    const missingField = !email ? 'email' : !password ? 'password' : 'username';
+    return new Response(`No ${missingField} provided!`, {
       status: 400,
-      statusText: `No ${email ? 'password' : 'email'} provided!`,
+      statusText: `No ${missingField} provided!`,
     });
   }
 
@@ -26,7 +28,19 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const user = await register({ email, password });
+  const usernameExists = await db.user.findFirst({
+    where: {
+      username,
+    },
+  });
+  if (usernameExists) {
+    return new Response(`This username has already been taken!`, {
+      status: 400,
+      statusText: `This username has already been taken!`,
+    });
+  }
+
+  const user = await register({ email, password, username });
 
   if (!user) {
     return new Response('Something went wrong creating your account!', {

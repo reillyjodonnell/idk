@@ -70,7 +70,7 @@
     --ring: 216 34% 17%;
 
     --radius: 0.5rem;
-    --code-background: rgb(30, 41, 59);
+    --code-background: rgb(8, 15, 27);
   }
 }
 
@@ -82,11 +82,10 @@
     @apply bg-background text-foreground;
     font-feature-settings: 'rlig' 1, 'calt' 1;
   }
-}
-html,
-body {
-  height: 100%;
-  background-color: hsl(var(--background));
+  html {
+    height: 100%;
+    background-color: hsl(var(--background));
+  }
 }
 
 h1,

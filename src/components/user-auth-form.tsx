@@ -19,6 +19,7 @@ export function UserRegisterAuthForm({
   const [error, setError] = useState<null | string>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,6 +34,7 @@ export function UserRegisterAuthForm({
         body: JSON.stringify({
           email,
           password,
+          username,
         }),
       });
       if (!res.ok) throw new Error(res.statusText);
@@ -61,6 +63,13 @@ export function UserRegisterAuthForm({
     setPassword(value);
   }
 
+  function handleUsernameInput(value: string) {
+    if (error) {
+      setError(null);
+    }
+    setUsername(value);
+  }
+
   return (
     <div className={cn('grid gap-6', className)} {...props}>
       {error ? (
@@ -73,6 +82,18 @@ export function UserRegisterAuthForm({
       <form onSubmit={onSubmit} method="post">
         <div className="grid gap-2">
           <div className="grid gap-1">
+            <Label htmlFor="username">Username</Label>
+            <Input
+              id="username"
+              placeholder="username"
+              type="text"
+              name="username"
+              autoCapitalize="none"
+              onChange={(e) => handleUsernameInput(e.target.value)}
+              autoCorrect="off"
+              disabled={isLoading}
+              required
+            />
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
@@ -101,7 +122,7 @@ export function UserRegisterAuthForm({
               required
             />
           </div>
-          <Button disabled={isLoading || email === ''}>
+          <Button disabled={isLoading || email === '' || username === ''}>
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}

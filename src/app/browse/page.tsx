@@ -71,23 +71,7 @@ export default async function DashboardPage({
 
   return (
     <>
-      <div className="md:hidden">
-        <Image
-          src="/examples/dashboard-light.png"
-          width={1280}
-          height={866}
-          alt="Dashboard"
-          className="block dark:hidden"
-        />
-        <Image
-          src="/examples/dashboard-dark.png"
-          width={1280}
-          height={866}
-          alt="Dashboard"
-          className="hidden dark:block"
-        />
-      </div>
-      <div className="hidden flex-col md:flex w-full">
+      <div className=" flex-col md:flex w-full">
         <div className="border-b">
           <div className="flex h-16 items-center px-4">
             <div className="ml-auto flex items-center space-x-4"></div>
@@ -124,7 +108,7 @@ export default async function DashboardPage({
               </div>
             ) : null}
           </div>
-          <div className="mt-6 hidden items-start justify-center gap-6 rounded-lg p-8 md:grid lg:grid-cols-2 ">
+          <div className="mt-6 grid items-start justify-center gap-6 rounded-lg md:p-8 md:grid lg:grid-cols-2 ">
             <Card>
               <CardHeader>
                 <CardTitle>Most Recent</CardTitle>

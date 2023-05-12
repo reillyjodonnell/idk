@@ -31,7 +31,6 @@ export async function POST(request: NextRequest) {
     });
 
     if (existingReaction) {
-      console.log(existingReaction);
       // Remove existing reaction
       await db.reaction.delete({
         where: {
