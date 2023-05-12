@@ -13,7 +13,6 @@ export async function middleware(request: NextRequest) {
   }
 
   try {
-    console.log('theres a session');
     const user = await (
       await fetch(fetchUrl, {
         method: 'POST',
@@ -23,7 +22,6 @@ export async function middleware(request: NextRequest) {
         body: JSON.stringify(session.value),
       })
     ).json();
-    console.log(user);
 
     if (!user) {
       const redirectUrl = `${request.nextUrl.origin}/login`;

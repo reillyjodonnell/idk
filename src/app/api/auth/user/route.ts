@@ -6,7 +6,6 @@ export async function POST(request: NextRequest) {
 
   const session = res;
 
-  console.log('after session var');
   if (!session) {
     return new Response('Something went wrong!', {
       status: 500,
@@ -14,13 +13,11 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  console.log('after not session check');
   // retrieve session from db to extract user id
   const sessionData = await db.session.findUnique({
     where: { id: session },
   });
 
-  console.log('after session data');
   if (!sessionData) {
     return new Response('Something went wrong!', {
       status: 500,
@@ -40,14 +37,11 @@ export async function POST(request: NextRequest) {
       statusText: 'Session expired!',
     });
   }
-  console.log('after expiry check');
 
   // retrieve user from db to see if token is valid
   const userData = await db.user.findUnique({
     where: { id: sessionData.userId },
   });
-
-  console.log(userData);
 
   if (!userData) {
     return new Response('Something went wrong!', {
