@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/button';
 import { Tags } from 'lucide-react';
 import { capitalizeFirstLetter, formatTime } from '@/lib/utils';
+import UserAvatar from '@/components/user-avatar';
 
 export default async function Popular({ slug }: { slug: string }) {
   const questions = await db.post.findMany({
@@ -59,12 +60,11 @@ export default async function Popular({ slug }: { slug: string }) {
           >
             <div className="flex items-start justify-start">
               <div className="mr-2  shrink-0 self-start">
-                <Image
-                  alt="profile"
+                <UserAvatar
+                  size="md"
+                  alt="user's profile"
                   src={question.author.avatar ?? ''}
-                  width={40}
-                  height={40}
-                  className=" w-10 h-10 rounded-full bg-green-500 object-cover "
+                  className="p-[4px]"
                 />
               </div>
               <Link href={`/questions/${question.id}`}>

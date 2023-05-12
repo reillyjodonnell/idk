@@ -52,15 +52,16 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const redirectUrl = `${request.nextUrl.origin}/`;
-  return NextResponse.redirect(redirectUrl);
+  // artifical delay of .1 s
 
-  return new Response('Login successful!', {
+  const redirectUrl = `${request.nextUrl.origin}/`;
+
+  return NextResponse.redirect(redirectUrl, {
     headers: {
       'Content-Type': 'application/json',
       'Set-Cookie': `session=${session}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${SESSION_TIMEOUT}`,
     },
-    status: 200,
-    statusText: 'OK',
+    status: 302, // Redirect status code
+    statusText: 'Found',
   });
 }

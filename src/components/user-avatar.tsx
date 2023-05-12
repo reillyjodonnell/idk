@@ -28,7 +28,7 @@ export default function UserAvatar({
         <UserIcon
           className={`${heightAndWidth} stroke-primary ${
             size === 'sm' ? 'p-1' : 'p-2'
-          } `}
+          } ${props.className}`}
         />
         {/* <AvatarFallback>L</AvatarFallback> */}
       </Avatar>
@@ -36,7 +36,7 @@ export default function UserAvatar({
   }
 
   return (
-    <Avatar className={`${heightAndWidth} mr-4 border-2`}>
+    <Avatar className={`${heightAndWidth} mr-4 border-2 ${props.className}`}>
       <AvatarImage
         className="object-cover"
         src={props.src}

@@ -18,18 +18,14 @@ export default async function Header({
 }) {
   const cookieStore = cookies();
   const session = cookieStore.get('session');
-  let user;
-  if (session) {
-    const userId = await getSession(session.value);
-    if (userId) {
-      // retrieve user profile from db
-      user = await db.user.findFirst({
+  const userId = session ? await getSession(session.value) : null;
+  const user = userId
+    ? await db.user.findFirst({
         where: {
           id: userId,
         },
-      });
-    }
-  }
+      })
+    : null;
 
   return (
     <header

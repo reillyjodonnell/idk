@@ -58,14 +58,8 @@ export default async function Recent({ slug }: { slug: string }) {
                   size="md"
                   alt="user's profile"
                   src={question.author.avatar ?? ''}
+                  className="p-[4px]"
                 />
-                {/* <Image
-                  alt="profile"
-                  src={question.author.avatar ?? ''}
-                  width={40}
-                  height={40}
-                  className=" w-10 h-10 rounded-full bg-green-500 object-cover "
-                /> */}
               </div>
               <Link href={`/questions/${question.id}`}>
                 <h4 className=" font-medium hover:underline">

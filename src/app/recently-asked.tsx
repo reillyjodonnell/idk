@@ -44,6 +44,7 @@ export default async function RecentlyAsked() {
                   <UserAvatar
                     alt="profile"
                     src={question.author.avatar ?? ''}
+                    className="p-[4px]"
                   />
                 </div>
                 <Link href={`/questions/${question.id}`}>

@@ -24,14 +24,16 @@ interface DataTableFacetedFilter<TData, TValue> {
     value: string;
     icon?: LucideIcon;
   }[];
+  tags: any[];
+  setTags: React.Dispatch<React.SetStateAction<TValue[]>>;
 }
 
 export function TagSelector<TData, TValue>({
   title,
   options,
+  tags: selectedValues,
+  setTags: setSelectedValues,
 }: DataTableFacetedFilter<TData, TValue>) {
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
-
   return (
     <>
       <Popover>
@@ -77,7 +79,10 @@ export function TagSelector<TData, TValue>({
                           );
                           setSelectedValues(filteredArr);
                         } else {
-                          setSelectedValues((prev) => [...prev, option.value]);
+                          setSelectedValues((prev: any) => [
+                            ...prev,
+                            option.value,
+                          ]);
                         }
                       }}
                     >
