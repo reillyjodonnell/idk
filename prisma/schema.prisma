@@ -21,6 +21,14 @@ model User {
   updatedAt DateTime  @updatedAt
   posts     Post[]
   comments  Comment[]
+  sessions  Session[]
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  expiresAt DateTime
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Post {

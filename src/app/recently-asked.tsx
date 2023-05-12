@@ -40,7 +40,7 @@ export default async function RecentlyAsked() {
               className="border p-4 flex flex-col w-full mb-6 break-inside-avoid-column"
             >
               <div className="flex items-start justify-start">
-                <div className="mr-2  shrink-0 self-start">
+                <div className="mr-2 shrink-0 self-start">
                   <UserAvatar
                     alt="profile"
                     src={question.author.avatar ?? ''}

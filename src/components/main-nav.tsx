@@ -40,7 +40,7 @@ export function MainNav({
       >
         Browse
       </Link>
-      <Link
+      {/* <Link
         href="/settings"
         className={cn(
           'text-sm font-medium text-muted-foreground transition-colors hover:text-primary',
@@ -48,7 +48,7 @@ export function MainNav({
         )}
       >
         Settings
-      </Link>
+      </Link> */}
     </nav>
   );
 }

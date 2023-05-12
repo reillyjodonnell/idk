@@ -55,21 +55,34 @@ export default async function Page({ params }: any) {
 
   return (
     <div className="flex flex-col justify-start items-center p-10">
-      {/* <Link href={`users/${userId}`}> */}
-      <UserAvatar size="xl" alt="" src={data.author.avatar ?? ''} />
-      {/* </Link> */}
-      <span>@{data.author.username}</span>
-      <span>
-        {formatTime(data.updatedAt.toISOString()) ??
-          formatTime(data.createdAt.toISOString())}
-      </span>
-      <span className="font-bold text-2xl">{data.title}</span>
+      <div className="flex">
+        {/* <Link href={`users/${userId}`}> */}
+        <UserAvatar
+          size="xl"
+          alt=""
+          src={
+            ''
+            // 'https://images.pexels.com/photos/16657191/pexels-photo-16657191.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+          }
+        />
+        {/* </Link> */}
+        <div className="flex flex-col justify-center">
+          <span>@{data.author.username}</span>
+          <span>
+            {formatTime(data.updatedAt.toISOString()) ??
+              formatTime(data.createdAt.toISOString())}
+          </span>
+        </div>
+      </div>
+      <div className="flex flex-col justify-center my-4 ">
+        <span className="font-bold text-3xl">{data.title}</span>
 
-      <div className="flex justify-center items-center my-2">
-        <Tags className="h-4 w-4 flex-shrink-0 mr-2" />
-        {data.tags.map((tag) => (
-          <Tag key={tag.id} name={tag.name} />
-        ))}
+        <div className="flex justify-center items-center mt-4">
+          <Tags className="h-4 w-4 flex-shrink-0 mr-2" />
+          {data.tags.map((tag) => (
+            <Tag key={tag.id} name={tag.name} />
+          ))}
+        </div>
       </div>
 
       <div>
