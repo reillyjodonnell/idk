@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { db } from '../../../../prisma/prisma';
 import UserAvatar from '@/components/user-avatar';
-import Comment from '@/components/comment';
 import Tag from '@/components/tag';
 import { Tags } from 'lucide-react';
 import { formatTime } from '@/lib/utils';
@@ -10,11 +9,17 @@ import { EditorContent } from '@tiptap/react';
 import FormattedContent from './formatted-content';
 import { Input } from '@/components/input';
 import { Button } from '@/components/button';
+import CommentInput from './comment';
+import Comment from '@/components/comment';
+
+import { retrieveUserServerOnly } from '@/app/helpers/server-components/utils';
 
 export default async function Page({ params }: any) {
+  const postId = parseInt(params.slug);
+  const user = await retrieveUserServerOnly();
   const data = await db.post.findUniqueOrThrow({
     where: {
-      id: parseInt(params.slug),
+      id: postId,
     },
     select: {
       id: true,
@@ -50,8 +55,6 @@ export default async function Page({ params }: any) {
   if (!data) {
     return null;
   }
-
-  const userId = 0;
 
   return (
     <div className="flex flex-col justify-start items-center p-10">
@@ -100,7 +103,7 @@ export default async function Page({ params }: any) {
                 id={comment.id}
                 key={comment.id}
                 avatar={data.author.avatar ?? ''}
-                username={data.author.username}
+                username={data.author.username ?? ''}
                 authorId={data.author.id}
                 body={comment.body}
                 createdAt={comment.createdAt}
@@ -117,16 +120,8 @@ export default async function Page({ params }: any) {
             <span className="font-semibold text-xl">No comments yet 🥲</span>
           </div>
         )}
-        <div className="flex w-full my-12 items-center space-x-2">
-          <Input
-            type="text"
-            className="py-6 text-base"
-            placeholder="Write a response..."
-          />
-          <Button className="px-8 py-6" type="submit">
-            Comment
-          </Button>
-        </div>
+
+        <CommentInput postId={postId} authorId={user ? user.id : null} />
       </div>
     </div>
   );

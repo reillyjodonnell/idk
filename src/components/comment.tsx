@@ -24,14 +24,18 @@ export default function Comment(props: CommentType) {
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-2 my-2 ">
       <div className="flex items-center ">
         {/* <Link className="p-1" href={`users/${props.authorId}`}> */}
-        <UserAvatar
-          src={props.avatar}
-          alt={`${props.username}'s avatar`}
-          size="lg"
-        />
+        <div className="ml-2">
+          <UserAvatar
+            src={props.avatar}
+            alt={`${props.username}'s avatar`}
+            size="lg"
+            className=""
+          />
+        </div>
+
         {/* </Link> */}
 
-        <div className="flex justify-center items-center w-full px-2">
+        <div className="flex justify-center items-center w-full pr-2">
           {/* <Link href={`users/${props.authorId}`}> */}
           <span className="font-semibold hover:underline cursor-pointer text-lg ">
             {props.username}

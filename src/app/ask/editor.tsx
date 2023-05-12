@@ -90,7 +90,7 @@ export default function Editor({ userId }: { userId: string }) {
   const [tags, setTags] = useState([]);
   const [language, setLanguage] = useState('typescript');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
 
   const router = useRouter();
   const { toast } = useToast();
