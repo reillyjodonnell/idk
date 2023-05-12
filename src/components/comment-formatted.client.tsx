@@ -9,15 +9,9 @@ import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { Color } from '@tiptap/extension-color';
 import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
-import '../../ask/code-editor-buttons.css';
-import './formatted-content.css';
-export default function FormattedContent({
-  content,
-  title,
-}: {
-  content: string;
-  title: string;
-}) {
+import '@/app/ask/code-editor-buttons.css';
+import '@/app/questions/[slug]/formatted-content.css';
+export default function CommentFormatted({ content }: { content: string }) {
   const updated = content + '```<div>wow</div>```';
   const editor = useEditor({
     editable: false,
@@ -46,10 +40,5 @@ export default function FormattedContent({
   if (!editor) {
     return null;
   }
-  return (
-    <div className="flex flex-col justify-start border bg-accent">
-      <h1 className="p-6">{title}</h1>
-      <EditorContent editor={editor} />
-    </div>
-  );
+  return <EditorContent editor={editor} />;
 }

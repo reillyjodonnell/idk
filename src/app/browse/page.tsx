@@ -9,6 +9,7 @@ import {
 import { db } from '../../../prisma/prisma';
 import Search from './search';
 import Link from 'next/link';
+import { extractTextFromHTML } from '@/lib/utils';
 
 export default async function DashboardPage({
   params,
@@ -95,27 +96,26 @@ export default async function DashboardPage({
                 <CardDescription>{`These just posted`}</CardDescription>
               </CardHeader>
               <CardContent className="grid ">
-                {recents.map((post) => (
-                  <Link
-                    key={post.id}
-                    className="hover:bg-secondary rounded-md p-2"
-                    href={`questions/${post.id}`}
-                  >
-                    <div className="flex flex-col justify-start items-start ">
-                      <span>{post.title}</span>
+                {recents.map((post) => {
+                  const formattedBody = extractTextFromHTML(post.body);
 
-                      <span className="text-sm leading-snug text-muted-foreground line-clamp-2 overflow-hidden">
-                        {post.body}
-                      </span>
-                    </div>
-                  </Link>
-                ))}
+                  return (
+                    <Link
+                      key={post.id}
+                      className="hover:bg-secondary rounded-md p-2"
+                      href={`questions/${post.id}`}
+                    >
+                      <div className="flex flex-col justify-start items-start ">
+                        <span>{post.title}</span>
+
+                        <span className="text-sm leading-snug text-muted-foreground line-clamp-2 overflow-hidden">
+                          {formattedBody}
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                })}
               </CardContent>
-              {/* <CardFooter>
-                <Button variant="outline" className="w-full">
-                  See more
-                </Button>
-              </CardFooter> */}
             </Card>
             <Card>
               <CardHeader>
@@ -123,22 +123,25 @@ export default async function DashboardPage({
                 <CardDescription>{`What's trending?`}</CardDescription>
               </CardHeader>
               <CardContent className="grid ">
-                {popular.map((post) => (
-                  <Link
-                    key={post.id}
-                    className="hover:bg-secondary rounded-md p-2"
-                    href={`questions/${post.id}`}
-                  >
-                    <div className="flex flex-col justify-start items-start ">
-                      <div className="flex justify-start items-center">
-                        <span>{post.title}</span>
+                {popular.map((post) => {
+                  const formattedBody = extractTextFromHTML(post.body);
+                  return (
+                    <Link
+                      key={post.id}
+                      className="hover:bg-secondary rounded-md p-2"
+                      href={`questions/${post.id}`}
+                    >
+                      <div className="flex flex-col justify-start items-start ">
+                        <div className="flex justify-start items-center">
+                          <span>{post.title}</span>
+                        </div>
+                        <span className="text-sm leading-snug text-muted-foreground line-clamp-2 overflow-hidden">
+                          {formattedBody}
+                        </span>
                       </div>
-                      <span className="text-sm leading-snug text-muted-foreground line-clamp-2 overflow-hidden">
-                        {post.body}
-                      </span>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  );
+                })}
               </CardContent>
             </Card>
           </div>

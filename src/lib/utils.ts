@@ -15,3 +15,18 @@ export function formatTime(time: string) {
 
   return formatDistanceToNow(postDate, { addSuffix: true });
 }
+
+export function extractTextFromHTML(html: string): string {
+  const regex = /<(?:p|h1|h2|h3|span)[^>]*>(.*?)<\/(?:p|h1|h2|h3|span)>/g;
+  const matches = html.match(regex);
+
+  if (!matches) {
+    return html;
+  }
+
+  const text = matches
+    .map((match) => match.replace(/<\/?[^>]+(>|$)/g, ''))
+    .join(' ');
+
+  return text;
+}

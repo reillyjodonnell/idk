@@ -6,6 +6,7 @@ import { formatTime } from '@/lib/utils';
 import { retrieveUserServerOnly } from '@/app/helpers/server-components/utils';
 import { db } from '../../prisma/prisma';
 import Emoji from './emoji.client';
+import CommentFormatted from './comment-formatted.client';
 
 type CommentType = {
   [key: string]: any;
@@ -62,6 +63,7 @@ export default async function Comment(props: CommentType) {
         {/* <Link className="p-1" href={`users/${props.authorId}`}> */}
         <div className="ml-2">
           <UserAvatar
+            isAi={props.username === 'AI'}
             src={props.avatar}
             alt={`${props.username}'s avatar`}
             size="lg"
@@ -84,7 +86,11 @@ export default async function Comment(props: CommentType) {
         </div>
       </div>
       <div className="p-4">
-        <span>{props.body}</span>
+        {props.username === 'AI' ? (
+          <CommentFormatted content={props.body} />
+        ) : (
+          <span>{props.body}</span>
+        )}
       </div>
       <div className="flex ">
         {EMOJIS.map((emoji) => {

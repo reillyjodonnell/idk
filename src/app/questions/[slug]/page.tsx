@@ -55,7 +55,7 @@ export default async function Page({ params }: any) {
   }
 
   return (
-    <div className="flex flex-col justify-start items-center p-10">
+    <div className="flex flex-col justify-start items-center p-10 w-full">
       <div className="flex flex-col justify-center my-4 ">
         <span className="font-bold text-3xl text-center md:text-left ">
           {data.title}
@@ -87,7 +87,7 @@ export default async function Page({ params }: any) {
         ))}
       </div>
 
-      <div>
+      <div className="w-full">
         <FormattedContent content={data.body} title={data.title} />
       </div>
       <div className="w-full">

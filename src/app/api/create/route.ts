@@ -36,6 +36,58 @@ export async function POST(request: NextRequest) {
     });
   }
 
+  const content = `${body}. Format code in HTML only.`;
+
+  // now chat gpt needs to respond with a message
+  const chatGptResponse = await fetch(
+    'https://api.openai.com/v1/chat/completions',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content }],
+      }),
+    }
+  );
+
+  if (!chatGptResponse) {
+    return new Response('Something went wrong!', {
+      status: 500,
+      statusText: 'Problem generating response!',
+    });
+  }
+
+  const chatGptResponseJson = await chatGptResponse.json();
+
+  const response = chatGptResponseJson.choices[0].message.content;
+
+  if (!response) {
+    return new Response('Something went wrong!', {
+      status: 500,
+      statusText: 'Problem generating response!',
+    });
+  }
+  // store comment on post in db as AI response
+  const comment = await db.comment.create({
+    data: {
+      body: response,
+      authorId: process.env.AI_ID!,
+      postId: post.id,
+    },
+  });
+
+  if (!comment) {
+    return new Response('Something went wrong!', {
+      status: 500,
+      statusText: 'Comment not created!',
+    });
+  }
+
+  // redirect to home page
   const redirectUrl = `${request.nextUrl.origin}/`;
 
   return NextResponse.redirect(redirectUrl, {

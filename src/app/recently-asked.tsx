@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { db } from '../../prisma/prisma';
 import UserAvatar from '@/components/user-avatar';
 import { formatTime } from '@/lib/utils';
+import { extractTextFromHTML } from '@/lib/utils';
 
 export default async function RecentlyAsked() {
   const questions = await db.post.findMany({
@@ -29,11 +30,14 @@ export default async function RecentlyAsked() {
   const showMoreTags = true;
   function toggleShowAllTags() {}
   const id = 1;
+
   return (
     <div className="w-full flex flex-col justify-center items-center p-8 ">
       <h2 className="text-xl font-semibold mb-4">Recently Asked Questions</h2>
       <ul className="columns-1 md:columns-2 xl:columns-3 gap-x-6 gap-y-6 h-full">
         {questions.map((question) => {
+          const formattedBody = extractTextFromHTML(question.body);
+
           return (
             <li
               key={question.id}
@@ -55,7 +59,7 @@ export default async function RecentlyAsked() {
               </div>
               <div className="py-2">
                 <span className="text-sm text-gray-600 line-clamp-4">
-                  {question.body}
+                  {formattedBody}
                 </span>
               </div>
               <div className="flex items-center space-x-4 mt-auto py-4">
