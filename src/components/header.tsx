@@ -5,10 +5,32 @@ import { ModeToggle } from './mode-toggle';
 import { cn } from '@/lib/utils';
 import { Button } from './button';
 import Link from 'next/link';
+import { cookies } from 'next/headers';
+import { getSession } from '@/lib/server-utils';
+import { db } from '../../prisma/prisma';
+import { UserIcon } from 'lucide-react';
+import LogoutButton from './logout-button-client';
 
-export default function Header({ className = '' }: { className?: string }) {
-  // retrieve user
-  const user = null;
+export default async function Header({
+  className = '',
+}: {
+  className?: string;
+}) {
+  const cookieStore = cookies();
+  const session = cookieStore.get('session');
+  let user;
+  if (session) {
+    const userId = await getSession(session.value);
+    if (userId) {
+      // retrieve user profile from db
+      user = await db.user.findFirst({
+        where: {
+          id: userId,
+        },
+      });
+    }
+  }
+
   return (
     <header
       className={cn(
@@ -20,10 +42,15 @@ export default function Header({ className = '' }: { className?: string }) {
       <MainNav />
       <div className="flex justify-center items-center ml-auto">
         {user ? (
-          <Avatar className="mx-6 h-8 w-8">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          <>
+            <Avatar className="border-2 h-10 w-10">
+              <AvatarImage src={user.avatar ?? ''} />
+              <AvatarFallback>
+                <UserIcon />
+              </AvatarFallback>
+            </Avatar>
+            <LogoutButton session={session?.value ?? ''} />
+          </>
         ) : (
           <Link href="/login">
             <Button className="mx-6 h-8">Login</Button>

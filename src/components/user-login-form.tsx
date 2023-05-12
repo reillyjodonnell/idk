@@ -1,36 +1,62 @@
 'use client';
 
-import * as React from 'react';
+import React, { useState } from 'react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { Label } from '@/components/label';
 import { Icons } from '@/components/icons';
+import { useRouter } from 'next/navigation';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [error, setError] = useState<null | string>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
     setIsLoading(true);
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      if (!res.ok) throw new Error(res.statusText);
+      // user created!
+      if (res.ok) router.push('/');
+    } catch (err: any) {
+      console.log(err);
+      if (err.message) {
+        setError(err.message);
+      }
+    }
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
+    setIsLoading(false);
   }
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
-      <form onSubmit={onSubmit}>
+      {error && <div className="text-red-500">{error}</div>}
+
+      <form onSubmit={onSubmit} method="post">
         <div className="grid gap-2">
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="email">
               Email
             </Label>
             <Input
+              onChange={(e) => {
+                setError(null);
+                setEmail(e.target.value);
+              }}
               id="email"
               placeholder="name@example.com"
               type="email"
@@ -52,6 +78,10 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
               autoComplete="password"
               autoCorrect="off"
               disabled={isLoading}
+              onChange={(e) => {
+                setError(null);
+                setPassword(e.target.value);
+              }}
             />
           </div>
           <Button disabled={isLoading}>

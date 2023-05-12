@@ -16,6 +16,10 @@ type RegisterForm = {
   name: string;
   username: string;
 };
+type LoginForm = {
+  email: string;
+  password: string;
+};
 export async function register({
   password,
   email,
@@ -29,7 +33,7 @@ export async function register({
   return { id: user.id, email };
 }
 
-export async function login({ password, email }: RegisterForm) {
+export async function login({ password, email }: LoginForm) {
   // check for user at email
   const user = await db.user.findFirst({
     where: {
@@ -67,14 +71,46 @@ export async function createSession(userId: string) {
   }
 }
 
-export async function getSession() {
-  // get session
-  // return session cookie
-  return null;
+export async function getSession(sessionId: string) {
+  // get user id tied to session
+  if (!sessionId) return null;
+  try {
+    const session = await db.session.findFirst({
+      where: {
+        id: sessionId,
+      },
+    });
+    if (!session) {
+      return null;
+    }
+    const currentDate = new Date();
+    if (currentDate > session.expiresAt) {
+      await db.session.delete({
+        where: {
+          id: sessionId,
+        },
+      });
+      return null;
+    }
+    return session.userId;
+  } catch (err) {
+    console.error(err);
+  }
 }
 
-export async function deleteSession() {
-  // delete session
-  // delete session cookie
-  return null;
+export async function deleteSession({ sessionId }: { sessionId: string }) {
+  if (!sessionId) return null;
+  try {
+    const session = await db.session.delete({
+      where: {
+        id: sessionId,
+      },
+    });
+    if (!session) {
+      return null;
+    }
+    return 'Success';
+  } catch (err) {
+    console.error(err);
+  }
 }
