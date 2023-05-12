@@ -36,3 +36,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 # Database / schema
 
 When updating `schema.prisma` be sure to run `npx prisma generate` to update the schema
+
+## Helpful scripts:
+
+`npx prisma db push` to sync schema to app when changes in schema
+`npx prisma db push --force-reset && npx prisma db seed` wipe & reseed

@@ -312,47 +312,6 @@ const users = [
     password: 'password20',
   },
 ];
-async function seedTags() {
-  try {
-    for (const option of options) {
-      const { label, value } = option;
-      const existingTag = await prisma.tag.findUnique({
-        where: { name: value },
-      });
-      if (!existingTag) {
-        await prisma.tag.create({ data: { name: value } });
-        console.log(`Tag "${value}" created.`);
-      } else {
-        console.log(`Tag "${value}" already exists.`);
-      }
-    }
-    console.log('Tag seeding completed.');
-  } catch (error) {
-    console.error('Error seeding tags:', error);
-  } finally {
-    await prisma.$disconnect();
-  }
-}
-
-// async function createUserWithPosts(user: UserCreateInput) {
-//   const existingUser = await prisma.user.findUnique({
-//     where: { username: user.username },
-//   });
-
-//   if (existingUser) {
-//     console.log(`User with username "${user.username}" already exists.`);
-//     return existingUser;
-//   }
-
-//   const createdUser = await prisma.user.create({ data: user });
-
-//   for (let i = 0; i < 200; i++) {
-//     await createPostWithComments(createdUser);
-//   }
-
-//   return createdUser;
-// }
-
 const titleVariations = [
   ['How do I use', 'to', 'with', 'in', 'for'],
   ['What is the best way to', 'using', 'implement', 'optimize', 'debug'],
@@ -450,73 +409,6 @@ const bodyVariations = [
   'Any recommendations for optimizing [TAG] performance?',
   // Add more preset sentences as needed
 ];
-
-// async function createPostWithComments(author: typeof UserType) {
-//   const tag = options[Math.floor(Math.random() * options.length)].value;
-//   const titleVariation =
-//     titleVariations[Math.floor(Math.random() * titleVariations.length)];
-//   const titleWords = titleVariation.map((word, index) => {
-//     if (index === 0) return word; // Use the first word as it is
-//     if (word === 'to') return tag; // Replace 'to' with the selected tag
-//     return getRandomWord(); // Generate a random word for other elements
-//   });
-//   const title = titleWords.join(' ');
-//   const bodyVariation =
-//     bodyVariations[Math.floor(Math.random() * bodyVariations.length)];
-//   const body = bodyVariation.replace('[TAG]', tag);
-
-//   const createdPost = await prisma.post.create({
-//     data: {
-//       title,
-//       body,
-//       author: { connect: { id: author.id } },
-//       tags: { connect: { name: tag } },
-//       thumbsUp: Math.floor(Math.random() * 10),
-//       thumbsDown: Math.floor(Math.random() * 5),
-//       fire: Math.floor(Math.random() * 5),
-//       eyes: Math.floor(Math.random() * 5),
-//     },
-//   });
-
-//   const commentCount = Math.floor(Math.random() * 5);
-//   for (let j = 0; j < commentCount; j++) {
-//     await createComment(createdPost);
-//   }
-// }
-
-// async function createComment(post: typeof PostType) {
-//   const randomUser = users[Math.floor(Math.random() * users.length)];
-//   const createdUser = await prisma.user.findUnique({
-//     where: { email: randomUser.email },
-//   });
-
-//   if (createdUser) {
-//     return await prisma.comment.create({
-//       data: {
-//         body: getRandomComment(),
-//         author: { connect: { id: createdUser.id } },
-//         post: { connect: { id: post.id } },
-//         thumbsUp: Math.floor(Math.random() * 5),
-//         thumbsDown: Math.floor(Math.random() * 2),
-//         fire: Math.floor(Math.random() * 2),
-//         eyes: Math.floor(Math.random() * 2),
-//       },
-//     });
-//   }
-// }
-
-type UserCreateInput = {
-  name: string;
-  username: string;
-  email: string;
-  password: string;
-};
-
-function getRandomTask() {
-  const tasks = ['build', 'implement', 'optimize', 'debug', 'refactor', 'test'];
-  return tasks[Math.floor(Math.random() * tasks.length)];
-}
-
 function getRandomComment() {
   const comments = [
     'Thanks for the helpful post!',
@@ -531,6 +423,55 @@ function getRandomComment() {
     "I'm not sure if this will help, but have you tried...",
   ];
   return comments[Math.floor(Math.random() * comments.length)];
+}
+
+async function seedTags() {
+  try {
+    for (const option of options) {
+      const { label, value } = option;
+      const existingTag = await prisma.tag.findUnique({
+        where: { name: value },
+      });
+      if (!existingTag) {
+        await prisma.tag.create({ data: { name: value } });
+        console.log(`Tag "${value}" created.`);
+      } else {
+        console.log(`Tag "${value}" already exists.`);
+      }
+    }
+    console.log('Tag seeding completed.');
+  } catch (error) {
+    console.error('Error seeding tags:', error);
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+type UserCreateInput = {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+};
+
+function getRandomTask() {
+  const tasks = ['build', 'implement', 'optimize', 'debug', 'refactor', 'test'];
+  return tasks[Math.floor(Math.random() * tasks.length)];
+}
+
+function getRandomEmoji() {
+  const emojis = ['thumbsUp', 'thumbsDown', 'fire', 'eyes'];
+  return emojis[Math.floor(Math.random() * emojis.length)];
+}
+
+async function createReaction(comment: any, user: any) {
+  await prisma.reaction.create({
+    data: {
+      emoji: getRandomEmoji(),
+      author: { connect: { id: user.id } },
+      comment: { connect: { id: comment.id } },
+    },
+  });
 }
 
 async function main() {
@@ -589,7 +530,7 @@ async function createComment(post: any) {
   });
 
   if (createdUser) {
-    await prisma.comment.create({
+    const createdComment = await prisma.comment.create({
       data: {
         body: getRandomComment(),
         author: { connect: { id: createdUser.id } },
@@ -600,5 +541,6 @@ async function createComment(post: any) {
         eyes: Math.floor(Math.random() * 2),
       },
     });
+    await createReaction(createdComment, createdUser);
   }
 }

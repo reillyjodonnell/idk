@@ -28,7 +28,6 @@ export default function Comment({
     e.preventDefault();
     setLoading(true);
     try {
-      console.log('fetching!');
       const res = await fetch('/api/questions/comment', {
         method: 'POST',
         headers: {
@@ -51,7 +50,6 @@ export default function Comment({
       }
     } catch (err) {
       setLoading(false);
-      console.log(err);
       setError('🙃 Something went wrong.');
     }
   }

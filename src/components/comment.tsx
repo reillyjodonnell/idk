@@ -1,10 +1,15 @@
-import type { Comment } from '@prisma/client';
+import type { Comment, Reaction } from '@prisma/client';
 import UserAvatar from './user-avatar';
 import Link from 'next/link';
 import ReactionPopover from './reaction-popover';
 import { formatTime } from '@/lib/utils';
+import { retrieveUserServerOnly } from '@/app/helpers/server-components/utils';
+import { db } from '../../prisma/prisma';
+import Emoji from './emoji.client';
 
-type CommentType = Pick<
+type CommentType = {
+  [key: string]: any;
+} & Pick<
   Comment,
   | 'id'
   | 'body'
@@ -16,10 +21,41 @@ type CommentType = Pick<
   | 'thumbsDown'
   | 'authorId'
 > & {
-  avatar: string;
-  username: string;
+    avatar: string;
+    username: string;
+  };
+
+export type EmojiLabel = '👍' | '👎' | '🔥' | '👀';
+export type EmojiKey = 'thumbsUp' | 'thumbsDown' | 'fire' | 'eyes';
+
+type Emoji = {
+  label: EmojiLabel;
+  value: EmojiKey;
 };
-export default function Comment(props: CommentType) {
+
+const EMOJIS: Emoji[] = [
+  { label: '👍', value: 'thumbsUp' },
+  { label: '👎', value: 'thumbsDown' },
+  { label: '🔥', value: 'fire' },
+  { label: '👀', value: 'eyes' },
+];
+
+export default async function Comment(props: CommentType) {
+  const user = await retrieveUserServerOnly();
+
+  const reaction = user?.id
+    ? await db.reaction.findFirst({
+        where: {
+          commentId: props.id,
+          authorId: user.id,
+        },
+      })
+    : null;
+
+  function isUsersEmojiReaction(reaction: Reaction | null, emoji: string) {
+    return reaction?.emoji === emoji && reaction?.authorId === user?.id;
+  }
+
   return (
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-2 my-2 ">
       <div className="flex items-center ">
@@ -51,32 +87,27 @@ export default function Comment(props: CommentType) {
         <span>{props.body}</span>
       </div>
       <div className="flex ">
-        {props.thumbsUp ? (
-          <div className="border rounded-2xl w-fit h-fit p-1 cursor-pointer m-1">
-            <span className="pl-2">👍</span>
-            <span className="px-2">{props.thumbsUp}</span>
-          </div>
-        ) : null}
-        {props.thumbsDown ? (
-          <div className="border rounded-2xl w-fit h-fit p-1 cursor-pointer m-1">
-            <span className="pl-2">👎</span>
-            <span className="px-2">{props.thumbsDown}</span>
-          </div>
-        ) : null}
-        {props.fire ? (
-          <div className="border rounded-2xl w-fit h-fit p-1 cursor-pointer m-1">
-            <span className="pl-2">🔥</span>
-            <span className="px-2">{props.fire}</span>
-          </div>
-        ) : null}
-        {props.eyes ? (
-          <div className="border rounded-2xl w-fit h-fit p-1 cursor-pointer m-1">
-            <span className="pl-2">👀</span>
-            <span className="px-2">{props.eyes}</span>
-          </div>
-        ) : null}
+        {EMOJIS.map((emoji) => {
+          const isActive = isUsersEmojiReaction(reaction, emoji.value);
+          return (
+            <Emoji
+              key={emoji.value}
+              emojiValue={emoji.value}
+              isActive={isActive}
+              count={props[emoji.value]}
+              emoji={emoji.label}
+              authorId={user?.id ?? null}
+              commentId={props.id}
+            />
+          );
+        })}
+
         <div className="ml-auto">
-          <ReactionPopover />
+          <ReactionPopover
+            commentAuthorId={props.authorId}
+            authorId={user ? user.id : null}
+            commentId={props.id}
+          />
         </div>
       </div>
     </div>

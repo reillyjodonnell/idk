@@ -11,17 +11,18 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
+  id        String     @id @default(uuid())
   name      String?
-  username  String?   @unique
-  email     String    @unique
+  username  String?    @unique
+  email     String     @unique
   password  String
   avatar    String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   posts     Post[]
   comments  Comment[]
   sessions  Session[]
+  reactions Reaction[]
 }
 
 model Session {
@@ -49,18 +50,32 @@ model Post {
 }
 
 model Comment {
-  id         Int      @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   body       String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
-  author     User     @relation(fields: [authorId], references: [id])
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @default(now())
+  author     User       @relation(fields: [authorId], references: [id])
   authorId   String
-  thumbsUp   Int      @default(0)
-  thumbsDown Int      @default(0)
-  fire       Int      @default(0)
-  eyes       Int      @default(0)
-  post       Post     @relation(fields: [postId], references: [id])
+  thumbsUp   Int        @default(0)
+  thumbsDown Int        @default(0)
+  fire       Int        @default(0)
+  eyes       Int        @default(0)
+  post       Post       @relation(fields: [postId], references: [id])
   postId     Int
+  reactions  Reaction[]
+}
+
+model Reaction {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  emoji     String
+  comment   Comment  @relation(fields: [commentId], references: [id])
+  commentId Int
+
+  @@unique([authorId, commentId])
 }
 
 model Tag {

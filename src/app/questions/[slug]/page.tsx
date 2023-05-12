@@ -1,17 +1,12 @@
-import Link from 'next/link';
+import React from 'react';
 import { db } from '../../../../prisma/prisma';
 import UserAvatar from '@/components/user-avatar';
 import Tag from '@/components/tag';
 import { Tags } from 'lucide-react';
 import { formatTime } from '@/lib/utils';
-import Editor from '@/app/ask/editor';
-import { EditorContent } from '@tiptap/react';
 import FormattedContent from './formatted-content';
-import { Input } from '@/components/input';
-import { Button } from '@/components/button';
 import CommentInput from './comment';
 import Comment from '@/components/comment';
-
 import { retrieveUserServerOnly } from '@/app/helpers/server-components/utils';
 
 export default async function Page({ params }: any) {
@@ -39,6 +34,9 @@ export default async function Page({ params }: any) {
           fire: true,
           thumbsUp: true,
           thumbsDown: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
         },
       },
       author: {
@@ -99,20 +97,21 @@ export default async function Page({ params }: any) {
             </div>
 
             {data.comments.map((comment) => (
-              <Comment
-                id={comment.id}
-                key={comment.id}
-                avatar={data.author.avatar ?? ''}
-                username={data.author.username ?? ''}
-                authorId={data.author.id}
-                body={comment.body}
-                createdAt={comment.createdAt}
-                updatedAt={comment.updatedAt}
-                fire={comment.fire}
-                thumbsUp={comment.thumbsUp}
-                thumbsDown={comment.thumbsDown}
-                eyes={comment.eyes}
-              />
+              <React.Fragment key={comment.id}>
+                <Comment
+                  id={comment.id}
+                  avatar={data.author.avatar ?? ''}
+                  username={comment.author.username ?? ''}
+                  authorId={comment.author.id}
+                  body={comment.body}
+                  createdAt={comment.createdAt}
+                  updatedAt={comment.updatedAt}
+                  fire={comment.fire}
+                  thumbsUp={comment.thumbsUp}
+                  thumbsDown={comment.thumbsDown}
+                  eyes={comment.eyes}
+                />
+              </React.Fragment>
             ))}
           </>
         ) : (
