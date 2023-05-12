@@ -37,8 +37,6 @@ export default async function DashboardPage({
   params: any;
   searchParams: any;
 }) {
-  console.log(params);
-  console.log(searchParams);
   const search = searchParams?.search ?? '';
   const page = Number(searchParams?.page ?? 1);
   const limit = 20;

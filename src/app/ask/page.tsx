@@ -1,31 +1,10 @@
 'use client';
 
-import { Metadata } from 'next';
-import { History, Pencil, Terminal, X } from 'lucide-react';
-
-import { Button } from '@/components/button';
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/components/hover-card';
-import { Label } from '@/components/label';
 import { Separator } from '@/components/separator';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/tabs';
-import { Textarea } from '@/components/textarea';
-import Header from '@/components/header';
-import AlertComponent from '@/client-components/alert';
+import { Tabs, TabsContent } from '@/components/tabs';
 import Editor from './editor';
-import { Suspense } from 'react';
-import { Skeleton } from '@/components/skeleton';
-import { Alert, AlertDescription, AlertTitle } from '@/components/alert';
 import PromptAlert from './prompt-alert';
 import { TagSelector } from './tag-selector';
-
-// export const metadata: Metadata = {
-//   title: 'Playground',
-//   description: 'The OpenAI Playground built using the components.',
-// };
 
 const options = [
   { label: 'JavaScript', value: 'JavaScript' },
@@ -82,28 +61,14 @@ const options = [
 export default function Page() {
   return (
     <>
-      {/* <Header className="py-2" /> */}
-
       <div className="hidden h-full flex-col md:flex">
         <div className="container flex flex-col items-start justify-between space-y-2 py-4 sm:flex-row sm:items-center sm:space-y-0 md:h-16">
           <h2 className="text-lg font-semibold">Ask a Question</h2>
-          {/* <div className="ml-auto flex w-full space-x-2 sm:justify-end">
-            <PresetSelector presets={presets} />
-            <PresetSave />
-            <div className="hidden space-x-2 md:flex">
-              <CodeViewer />
-              <PresetShare />
-            </div>
-            <PresetActions />
-          </div> */}
         </div>
-
         <Separator />
-
         <Tabs defaultValue="complete" className="flex-1">
           <div className="container h-full py-6">
             <PromptAlert />
-
             <div className="grid h-full items-stretch gap-6 md:grid-cols-[1fr_200px]">
               <div className="hidden h-full border justify-start items-center p-4 flex-col space-y-4 sm:flex md:order-2">
                 <div className="grid gap-2 relative ">

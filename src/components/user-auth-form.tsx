@@ -7,6 +7,8 @@ import { Input } from '@/components/input';
 import { Label } from '@/components/label';
 import { Icons } from '@/components/icons';
 import { redirect, useRouter } from 'next/navigation';
+import { Alert, AlertDescription, AlertTitle } from './alert';
+import { AlertCircle } from 'lucide-react';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -37,7 +39,6 @@ export function UserRegisterAuthForm({
       // user created!
       if (res.ok) router.push('/');
     } catch (err: any) {
-      console.log(err);
       if (err.message) {
         setError(err.message);
       }
@@ -62,7 +63,13 @@ export function UserRegisterAuthForm({
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
-      {error && <div className="text-red-500">{error}</div>}
+      {error ? (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      ) : null}
       <form onSubmit={onSubmit} method="post">
         <div className="grid gap-2">
           <div className="grid gap-1">

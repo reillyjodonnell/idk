@@ -18,7 +18,7 @@ export default function LogoutButton({ session }: { session: string }) {
       // user created!
       if (res.ok) window.location.reload();
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
     }
   }
 

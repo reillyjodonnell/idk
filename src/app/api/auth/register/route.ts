@@ -25,10 +25,8 @@ export async function POST(request: NextRequest) {
       statusText: `This email has already been used!`,
     });
   }
-  const name = 'test user';
-  const username = 'test';
 
-  const user = await register({ email, password, name, username });
+  const user = await register({ email, password });
 
   if (!user) {
     return new Response('Something went wrong creating your account!', {
@@ -46,8 +44,6 @@ export async function POST(request: NextRequest) {
       statusText: 'Something went wrong creating your session!',
     });
   }
-
-  console.log(session);
 
   return new Response('User created!', {
     headers: {

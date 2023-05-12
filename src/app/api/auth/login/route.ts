@@ -52,6 +52,9 @@ export async function POST(request: NextRequest) {
     });
   }
 
+  const redirectUrl = `${request.nextUrl.origin}/`;
+  return NextResponse.redirect(redirectUrl);
+
   return new Response('Login successful!', {
     headers: {
       'Content-Type': 'application/json',

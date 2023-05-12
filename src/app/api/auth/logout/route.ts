@@ -9,9 +9,7 @@ import { NextRequest } from 'next/server';
 export async function POST(request: NextRequest) {
   const res = await request.json();
   const session = res?.session;
-  console.log(session);
   // assign a session cookie to user
-  console.log('attempting to delete session');
   const deleted = await deleteSession({ sessionId: session });
   if (!deleted) {
     return new Response('Something went wrong!', {
@@ -19,7 +17,6 @@ export async function POST(request: NextRequest) {
       statusText: 'Something went wrong creating your session!',
     });
   }
-  console.log('deleted!');
 
   return new Response('Logout successful!', {
     headers: {

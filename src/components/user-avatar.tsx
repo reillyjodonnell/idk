@@ -18,7 +18,6 @@ export default function UserAvatar({
   ...props
 }: UserAvatarProps) {
   const heightAndWidth = sizeClasses[size];
-  console.log(props.src);
   if (
     props.src === undefined ||
     props.src === '' ||
