@@ -24,7 +24,7 @@ export default function UserAvatar({
     typeof props.src !== 'string'
   ) {
     return (
-      <Avatar className={`${heightAndWidth} mr-4 border-2`}>
+      <Avatar className={`${heightAndWidth} mr-4 border-2 bg-color`}>
         <UserIcon
           className={`${heightAndWidth} stroke-primary ${
             size === 'sm' ? 'p-1' : 'p-2'

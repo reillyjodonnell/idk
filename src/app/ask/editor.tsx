@@ -19,12 +19,13 @@ import TextStyle from '@tiptap/extension-text-style';
 import EditorMenuBar from './editor-menu-bar';
 import './code-editor-buttons.css';
 import { Button } from '@/components/button';
-import { Trash } from 'lucide-react';
+import { AlertCircle, Trash } from 'lucide-react';
 import { TagSelector } from './tag-selector';
 import { TabsContent } from '@/components/tabs';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/use-toast';
 import { Icons } from '@/components/icons';
+import { Alert, AlertDescription, AlertTitle } from '@/components/alert';
 
 const options = [
   { label: 'JavaScript', value: 'JavaScript' },
@@ -89,6 +90,7 @@ export default function Editor({ userId }: { userId: string }) {
   const [tags, setTags] = useState([]);
   const [language, setLanguage] = useState('typescript');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const router = useRouter();
   const { toast } = useToast();
@@ -96,38 +98,30 @@ export default function Editor({ userId }: { userId: string }) {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    // console.log(input);
-    // console.log(title);
-    // console.log(tags);
-    // // call api/create
-    try {
-      // .5 second timer
-      setTimeout(() => {
-        setLoading(false);
-      }, 500);
 
-      //   const res = await fetch('/api/create', {
-      //     method: 'POST',
-      //     body: JSON.stringify({
-      //       body: input,
-      //       title,
-      //       tags,
-      //       userId,
-      //     }),
-      //   });
-      //   if (!res.ok) throw new Error(res.statusText);
-      //   // redirect to home
-      //   console.log(res);
+    try {
+      const res = await fetch('/api/create', {
+        method: 'POST',
+        body: JSON.stringify({
+          body: input,
+          title,
+          tags,
+          userId,
+        }),
+      });
+      if (!res.ok) throw new Error(res.statusText);
+      // redirect to home
       toast({
         title: '🥳 Post created! ',
         description: 'Your post has been created successfully.',
       });
-      // if (res.ok) router.push('/');
-      // setLoading(false);
+      if (res.ok) router.push('/');
+      setLoading(false);
 
       // user created!
     } catch (err: any) {
       setLoading(false);
+      setError('🙃 Something went wrong, try again!');
       console.error(err);
     }
   }
@@ -168,68 +162,78 @@ export default function Editor({ userId }: { userId: string }) {
   }
 
   return (
-    <div className="grid h-full items-stretch gap-6 md:grid-cols-[1fr_200px]">
-      <div className="hidden h-full border justify-start items-center p-4 flex-col space-y-4 sm:flex md:order-2">
-        <div className="grid gap-2 relative ">
-          <TagSelector
-            setTags={setTags}
-            tags={tags}
-            title="Tags"
-            options={options}
-          />
+    <>
+      {error ? (
+        <Alert className="w-60 mb-8" variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      ) : null}
+
+      <div className="grid h-full items-stretch gap-6 md:grid-cols-[1fr_200px]">
+        <div className="hidden h-full border justify-start items-center p-4 flex-col space-y-4 sm:flex md:order-2">
+          <div className="grid gap-2 relative ">
+            <TagSelector
+              setTags={setTags}
+              tags={tags}
+              title="Tags"
+              options={options}
+            />
+          </div>
+        </div>
+        <div className="md:order-1 h-full">
+          <TabsContent value="complete" className="mt-0 border-0 p-0 h-full">
+            <div className="flex flex-col h-full w-full">
+              <div className="flex flex-col h-full editor-content-parent">
+                <EditorMenuBar editor={editor} />
+                <input
+                  className="flex flex-grow font-bold text-2xl border-2 border-b-0 p-4 mt-2 bg-transparent"
+                  placeholder="Give it a title!"
+                  value={title}
+                  maxLength={100}
+                  onChange={(e) => setTitle(e.target.value)}
+                  style={{ wordWrap: 'break-word' }}
+                />
+                <EditorContent content={input} editor={editor} />
+              </div>
+
+              <div className="flex items-center space-x-2 my-4">
+                <Button
+                  className="px-4 py-3"
+                  onClick={(e: any) => onSubmit(e)}
+                  disabled={!title || !input || loading}
+                >
+                  {loading ? (
+                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    'Submit'
+                  )}
+                </Button>
+                <Button
+                  className="px-4 py-3"
+                  disabled={!title || !input || loading}
+                  variant="destructive"
+                  onClick={() => {
+                    setTitle('');
+                    editor.commands.clearContent();
+                    setInput('');
+                  }}
+                >
+                  {loading ? (
+                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    <>
+                      <span className="mr-2">Trash</span>
+                      <Trash className="h-4 w-4" />
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+          </TabsContent>
         </div>
       </div>
-      <div className="md:order-1 h-full">
-        <TabsContent value="complete" className="mt-0 border-0 p-0 h-full">
-          <div className="flex flex-col h-full w-full">
-            <div className="flex flex-col h-full editor-content-parent">
-              <EditorMenuBar editor={editor} />
-              <input
-                className="flex flex-grow font-bold text-2xl border-2 border-b-0 p-4 mt-2 bg-transparent"
-                placeholder="Give it a title!"
-                value={title}
-                maxLength={100}
-                onChange={(e) => setTitle(e.target.value)}
-                style={{ wordWrap: 'break-word' }}
-              />
-              <EditorContent content={input} editor={editor} />
-            </div>
-
-            <div className="flex items-center space-x-2 my-4">
-              <Button
-                className="px-4 py-3"
-                onClick={(e: any) => onSubmit(e)}
-                disabled={!title || !input || loading}
-              >
-                {loading ? (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  'Submit'
-                )}
-              </Button>
-              <Button
-                className="px-4 py-3"
-                disabled={!title || !input || loading}
-                variant="destructive"
-                onClick={() => {
-                  setTitle('');
-                  editor.commands.clearContent();
-                  setInput('');
-                }}
-              >
-                {loading ? (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <>
-                    <span className="mr-2">Trash</span>
-                    <Trash className="h-4 w-4" />
-                  </>
-                )}
-              </Button>
-            </div>
-          </div>
-        </TabsContent>
-      </div>
-    </div>
+    </>
   );
 }

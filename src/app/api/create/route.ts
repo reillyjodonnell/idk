@@ -6,13 +6,9 @@ export async function POST(request: NextRequest) {
 
   // create post
   const title = res.title;
-  console.log(title);
   const body = res.body;
-  console.log(body);
   const tags = res.tags;
-  console.log(tags);
   const userId = res.userId;
-  console.log(userId);
   if (!title || !body || !userId) {
     return new Response('Something went wrong!', {
       status: 500,
@@ -28,6 +24,9 @@ export async function POST(request: NextRequest) {
       createdAt,
       updatedAt,
       authorId: userId,
+      tags: {
+        connect: tags.map((tag: string) => ({ name: tag })),
+      },
     },
   });
   if (!post) {
@@ -37,7 +36,6 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  console.log(request.nextUrl.origin);
   const redirectUrl = `${request.nextUrl.origin}/`;
 
   return NextResponse.redirect(redirectUrl, {
