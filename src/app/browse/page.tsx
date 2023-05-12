@@ -1,34 +1,14 @@
 import { Metadata } from 'next';
-import Image from 'next/image';
-import {
-  Activity,
-  CreditCard,
-  DollarSign,
-  Download,
-  Users,
-} from 'lucide-react';
-
-import { Button } from '@/components/button';
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/tabs';
-import { Input } from '@/components/input';
 import { db } from '../../../prisma/prisma';
 import Search from './search';
 import Link from 'next/link';
-import { Label } from '@/components/label';
-import { formatTime } from '@/lib/utils';
-
-export const metadata: Metadata = {
-  title: 'Dashboard',
-  description: 'Example dashboard app using the components.',
-};
 
 export default async function DashboardPage({
   params,

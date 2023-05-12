@@ -91,7 +91,7 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
               }}
             />
           </div>
-          <Button disabled={isLoading}>
+          <Button disabled={isLoading || !password || !email}>
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}

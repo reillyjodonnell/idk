@@ -56,6 +56,11 @@ export default async function Page({ params }: any) {
 
   return (
     <div className="flex flex-col justify-start items-center p-10">
+      <div className="flex flex-col justify-center my-4 ">
+        <span className="font-bold text-3xl text-center md:text-left ">
+          {data.title}
+        </span>
+      </div>
       <div className="flex">
         {/* <Link href={`users/${userId}`}> */}
         <UserAvatar
@@ -75,15 +80,11 @@ export default async function Page({ params }: any) {
           </span>
         </div>
       </div>
-      <div className="flex flex-col justify-center my-4 ">
-        <span className="font-bold text-3xl">{data.title}</span>
-
-        <div className="flex justify-center items-center mt-4">
-          <Tags className="h-4 w-4 flex-shrink-0 mr-2" />
-          {data.tags.map((tag) => (
-            <Tag key={tag.id} name={tag.name} />
-          ))}
-        </div>
+      <div className="flex justify-center items-center my-4">
+        <Tags className="h-4 w-4 flex-shrink-0 mr-2" />
+        {data.tags.map((tag) => (
+          <Tag key={tag.id} name={tag.name} />
+        ))}
       </div>
 
       <div>
@@ -115,7 +116,7 @@ export default async function Page({ params }: any) {
             ))}
           </>
         ) : (
-          <div className="flex my-6">
+          <div className="flex mt-12">
             <span className="font-semibold text-xl">No comments yet 🥲</span>
           </div>
         )}

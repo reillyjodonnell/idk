@@ -108,3 +108,7 @@ export async function deleteSession({ sessionId }: { sessionId: string }) {
     console.error(err);
   }
 }
+
+export function removeSpacesFromSlug(url: string): string {
+  return url.replace(/%20/g, ' ');
+}
