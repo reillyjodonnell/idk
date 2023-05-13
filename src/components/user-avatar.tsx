@@ -38,7 +38,7 @@ export default function UserAvatar({
     return (
       <Avatar className={`${heightAndWidth} mr-4 border-2 bg-color`}>
         <UserIcon
-          className={`${heightAndWidth} stroke-primary ${
+          className={`${heightAndWidth} stroke-white ${
             size === 'sm' ? 'p-1' : 'p-2'
           } ${props.className}`}
         />

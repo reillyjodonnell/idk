@@ -11,18 +11,39 @@ import {
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu';
 import { Icons } from './icons';
+import clsx from 'clsx';
 
-export function ModeToggle() {
-  const { setTheme } = useTheme();
+const sizeClasses = {
+  sm: '16',
+  md: '24',
+};
+
+export function ModeToggle({
+  className = '',
+  size = 'md',
+}: {
+  className?: string;
+  size?: keyof typeof sizeClasses;
+}) {
+  const { setTheme, theme } = useTheme();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="w-9 px-0">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={
+            size === 'sm'
+              ? () => setTheme(theme === 'dark' ? 'light' : 'dark')
+              : () => {}
+          }
+          className={clsx('w-9 px-0', className)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
+            width={sizeClasses[size]}
+            height={sizeClasses[size]}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -43,8 +64,8 @@ export function ModeToggle() {
           </svg>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
+            width={sizeClasses[size]}
+            height={sizeClasses[size]}
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -58,20 +79,22 @@ export function ModeToggle() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme('light')}>
-          <Icons.sun className="mr-2 h-4 w-4" />
-          <span>Light</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>
-          <Icons.moon className="mr-2 h-4 w-4" />
-          <span>Dark</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('system')}>
-          <Icons.laptop className="mr-2 h-4 w-4" />
-          <span>System</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
+      {size === 'md' && (
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem onClick={() => setTheme('light')}>
+            <Icons.sun className="mr-2 h-4 w-4" />
+            <span>Light</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme('dark')}>
+            <Icons.moon className="mr-2 h-4 w-4" />
+            <span>Dark</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme('system')}>
+            <Icons.laptop className="mr-2 h-4 w-4" />
+            <span>System</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      )}
     </DropdownMenu>
   );
 }

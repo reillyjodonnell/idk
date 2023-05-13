@@ -69,20 +69,23 @@ export default async function DashboardPage({
             {search !== '' ? (
               <div className="absolute max-h-80 h-fit w-full lg:w-[450px] z-20 overflow-y-scroll top-[100%] flex flex-col bg-background border p-4">
                 {posts.length > 0 ? (
-                  posts.map((post) => (
-                    <Link key={post.id} href={`/questions/${post.id}`}>
-                      <div className="my-1 p-2 hover:bg-secondary rounded-md">
-                        <div>
-                          <span className="font-semibold text-base">
-                            {post.title}
+                  posts.map((post) => {
+                    const body = extractTextFromHTML(post.body);
+                    return (
+                      <Link key={post.id} href={`/questions/${post.id}`}>
+                        <div className="my-1 p-2 hover:bg-secondary rounded-md">
+                          <div>
+                            <span className="font-semibold text-base">
+                              {post.title}
+                            </span>
+                          </div>
+                          <span className="text-md text-overflow-ellipsis overflow-hidden">
+                            {body}
                           </span>
                         </div>
-                        <span className="text-md text-overflow-ellipsis overflow-hidden">
-                          {post.body}
-                        </span>
-                      </div>
-                    </Link>
-                  ))
+                      </Link>
+                    );
+                  })
                 ) : (
                   <span>No results</span>
                 )}

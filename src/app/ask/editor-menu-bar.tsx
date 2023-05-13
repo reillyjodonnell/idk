@@ -37,7 +37,7 @@ export default function EditorMenuBar({ editor }: { editor: EditorType }) {
     return null;
   }
   return (
-    <Menubar className="p-0">
+    <Menubar className="p-0 w-full sm:w-auto flex-wrap sm:flex-nowrap my-4 sm:my-0 menubar">
       <MenubarMenu>
         <Button
           variant={'outline'}

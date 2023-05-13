@@ -173,3 +173,9 @@ ol {
   padding-left: 1rem;
   border-left: 2px solid hsl(var(--border));
 }
+
+@media only screen and (max-width: 500px) {
+  .ProseMirror {
+    padding: 16px;
+  }
+}

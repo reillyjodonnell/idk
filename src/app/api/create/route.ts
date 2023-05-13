@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const content = `${body}. Format code in HTML only.`;
+  const content = `${body}. Format any code in HTML format, using the pre and code tags.`;
 
   // now chat gpt needs to respond with a message
   const chatGptResponse = await fetch(

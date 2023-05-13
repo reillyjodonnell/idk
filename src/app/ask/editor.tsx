@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useEditor, EditorContent, ReactNodeViewRenderer } from '@tiptap/react';
 import type { Editor as EditorType } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -26,7 +26,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/use-toast';
 import { Icons } from '@/components/icons';
 import { Alert, AlertDescription, AlertTitle } from '@/components/alert';
-
+import toast from 'react-hot-toast';
 const options = [
   { label: 'JavaScript', value: 'JavaScript' },
   { label: 'React', value: 'React' },
@@ -93,13 +93,30 @@ export default function Editor({ userId }: { userId: string }) {
   const [error, setError] = useState('');
 
   const router = useRouter();
-  const { toast } = useToast();
+  const { toast: toast2 } = useToast();
+
+  function delay(ms: number): Promise<void> {
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, ms);
+    });
+  }
+
+  useLayoutEffect(() => {
+    // add height 100% to body
+    document.body.style.height = '100%';
+
+    return () => {
+      document.body.style.height = 'auto';
+    };
+  }, []);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 
-    try {
+    async function createPost() {
       const res = await fetch('/api/create', {
         method: 'POST',
         body: JSON.stringify({
@@ -110,11 +127,26 @@ export default function Editor({ userId }: { userId: string }) {
         }),
       });
       if (!res.ok) throw new Error(res.statusText);
-      // redirect to home
-      toast({
-        title: '🥳 Post created! ',
-        description: 'Your post has been created successfully.',
-      });
+
+      return res;
+    }
+
+    try {
+      const toastPromise = toast.promise(
+        createPost(),
+        {
+          loading: 'Creating post...',
+          success: <b>🥳 Post created!</b>,
+          error: <b>🙃 Could not create post.</b>,
+        },
+        {
+          position: 'bottom-right',
+          className: 'bg-black',
+        }
+      );
+
+      // Wait for the promise to resolve
+      const res = await toastPromise;
       if (res.ok) router.push('/');
       setLoading(false);
 
@@ -171,8 +203,8 @@ export default function Editor({ userId }: { userId: string }) {
         </Alert>
       ) : null}
 
-      <div className="grid h-full items-stretch gap-6 md:grid-cols-[1fr_200px]">
-        <div className="hidden h-full border justify-start items-center p-4 flex-col space-y-4 sm:flex md:order-2">
+      <div className=" h-full items-stretch gap-6 block sm:grid lg:grid-cols-1 xl:grid-cols-[1fr_200px]">
+        <div className="h-fit sm:h-full border justify-start items-center p-4 flex-col space-y-4 sm:flex md:order-2">
           <div className="grid gap-2 relative ">
             <TagSelector
               setTags={setTags}
@@ -202,6 +234,7 @@ export default function Editor({ userId }: { userId: string }) {
                 <Button
                   className="px-4 py-3"
                   onClick={(e: any) => onSubmit(e)}
+                  // onClick={(e: any) => onSubmit(e)}
                   disabled={!title || !input || loading}
                 >
                   {loading ? (

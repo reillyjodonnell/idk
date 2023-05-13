@@ -8,8 +8,17 @@ import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { getSession } from '@/lib/server-utils';
 import { db } from '../../prisma/prisma';
-import { UserIcon } from 'lucide-react';
+import { LogOut, User, UserIcon } from 'lucide-react';
 import LogoutButton from './logout-button-client';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from './dropdown-menu';
 
 export default async function Header({
   className = '',
@@ -26,6 +35,7 @@ export default async function Header({
         },
       })
     : null;
+  console.log(!!user ? 'USER' : 'NO USER');
 
   return (
     <header
@@ -39,21 +49,66 @@ export default async function Header({
       <div className="flex justify-center items-center ml-auto">
         {user ? (
           <>
-            <Avatar className="border-2 h-10 w-10">
-              <AvatarImage src={user.avatar ?? ''} />
-              <AvatarFallback>
-                <UserIcon />
-              </AvatarFallback>
-            </Avatar>
-            <LogoutButton session={session?.value ?? ''} />
+            <div className="hidden sm:flex justify-center items-center">
+              <Avatar className="border-2 h-10 w-10">
+                <AvatarImage src={user.avatar ?? ''} />
+                <AvatarFallback>
+                  <UserIcon />
+                </AvatarFallback>
+              </Avatar>
+              <LogoutButton session={session?.value ?? ''} />
+            </div>
+            <div className="block sm:hidden">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="relative h-8 w-8 rounded-full"
+                  >
+                    <Avatar className="border-2 h-10 w-10">
+                      <AvatarImage src={user.avatar ?? ''} />
+                      <AvatarFallback>
+                        <UserIcon />
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">
+                        {user.username}
+                      </p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        {user.email}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                      <ModeToggle size="sm" className="w-6 justify-start" />
+                      <span>Toggle theme</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                    {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </>
-        ) : (
+        ) : !user ? (
           <Link href="/login">
-            <Button className="mx-6 h-8">Login</Button>
+            <Button className="mx-4 sm:mx-6 h-6 sm:h-8">Login</Button>
           </Link>
-        )}
-
-        <ModeToggle />
+        ) : null}
+        <div className="hidden sm:flex">
+          <ModeToggle />
+        </div>
       </div>
     </header>
   );

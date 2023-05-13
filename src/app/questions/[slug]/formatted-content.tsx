@@ -48,7 +48,7 @@ export default function FormattedContent({
   }
   return (
     <div className="flex flex-col justify-start border bg-accent">
-      <h1 className="p-6">{title}</h1>
+      <h1 className="p-4 md:p-6">{title}</h1>
       <EditorContent editor={editor} />
     </div>
   );
