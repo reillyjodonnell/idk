@@ -10,6 +10,7 @@ import { db } from '../../../prisma/prisma';
 import Search from './search';
 import Link from 'next/link';
 import { extractTextFromHTML } from '@/lib/utils';
+import { Suspense } from 'react';
 
 export default async function DashboardPage({
   params,
@@ -65,7 +66,9 @@ export default async function DashboardPage({
 
           <div className="flex flex-col justify-center items-center relative">
             <h1 className="my-4">{`Find what you're looking for`}</h1>
-            <Search />
+            <Suspense fallback={<span>Loading...</span>}>
+              <Search />
+            </Suspense>
             {search !== '' ? (
               <div className="absolute max-h-80 h-fit w-full lg:w-[450px] z-20 overflow-y-scroll top-[100%] flex flex-col bg-background border p-4">
                 {posts.length > 0 ? (

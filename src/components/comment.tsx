@@ -1,6 +1,5 @@
 import type { Comment, Reaction } from '@prisma/client';
 import UserAvatar from './user-avatar';
-import Link from 'next/link';
 import ReactionPopover from './reaction-popover';
 import { formatTime } from '@/lib/utils';
 import { retrieveUserServerOnly } from '@/app/helpers/server-components/utils';

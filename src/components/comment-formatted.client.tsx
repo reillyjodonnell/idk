@@ -1,5 +1,5 @@
 'use client';
-import { useEditor, EditorContent, ReactNodeViewRenderer } from '@tiptap/react';
+import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import CodeBlock from '@tiptap/extension-code-block';
 import Document from '@tiptap/extension-document';
@@ -12,7 +12,6 @@ import TextStyle from '@tiptap/extension-text-style';
 import '@/app/ask/code-editor-buttons.css';
 import '@/app/questions/[slug]/formatted-content.css';
 export default function CommentFormatted({ content }: { content: string }) {
-  const updated = content + '```<div>wow</div>```';
   const editor = useEditor({
     editable: false,
     extensions: [

@@ -2,12 +2,22 @@ import { Separator } from '@/components/separator';
 import { Tabs } from '@/components/tabs';
 import Editor from './editor';
 import PromptAlert from './prompt-alert';
-import { retrieveUserServerOnly } from '../helpers/server-components/utils';
+import { cookies } from 'next/headers';
+import { getSession } from '@/lib/server-utils';
+import { db } from '../../../prisma/prisma';
 
 export default async function Page() {
-  const user = await retrieveUserServerOnly();
-  const userId = user?.id;
-  if (!userId) return null;
+  const cookieStore = cookies();
+  const session = cookieStore.get('session');
+  const userIdSession = session ? await getSession(session.value) : null;
+  const user = userIdSession
+    ? await db.user.findFirst({
+        where: {
+          id: userIdSession,
+        },
+      })
+    : null;
+  if (!user?.id) return null;
   return (
     <>
       <div className=" h-full flex-col md:flex">
@@ -18,7 +28,7 @@ export default async function Page() {
         <Tabs defaultValue="complete" className="flex-1 h-full">
           <div className="container h-full py-6">
             <PromptAlert />
-            <Editor userId={userId} />
+            <Editor userId={user?.id} />
           </div>
         </Tabs>
       </div>
