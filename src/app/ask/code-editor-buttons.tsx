@@ -4,7 +4,6 @@ import {
   SelectValue,
   SelectGroup,
   SelectContent,
-  SelectLabel,
   SelectItem,
 } from '@/components/select';
 import { NodeViewContent, NodeViewWrapper } from '@tiptap/react';

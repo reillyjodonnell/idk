@@ -13,7 +13,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
         {capitalizeFirstLetter(formatted)}
       </span>
       <ClientTab
+        /* @ts-expect-error Server Component */
         recent={<Recent slug={formatted} />}
+        /* @ts-expect-error Server Component */
         popular={<Popular slug={formatted} />}
       />
     </div>

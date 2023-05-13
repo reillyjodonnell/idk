@@ -1,5 +1,4 @@
 import { db } from '../../../../prisma/prisma';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/button';
 import { Tags } from 'lucide-react';
