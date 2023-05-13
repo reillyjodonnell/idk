@@ -1,15 +1,10 @@
-import { Divide, Pencil } from 'lucide-react';
+import { Pencil } from 'lucide-react';
 import { Button } from '@/components/button';
-import Header from '@/components/header';
 import Link from 'next/link';
-import { Sidebar } from './sidebar';
 import RecentlyAsked from './recently-asked';
 
 export default function Home() {
   return (
-    // <div className="  dark:bg-black w-full h-full ">
-    //   <Header className="py-2" />
-
     <section className="flex h-full flex-col items-center justify-start flex-1">
       <div className="flex flex-col justify-center items-center pt-8 my-8 lg:my-20">
         <h1 className="text-3xl w-3/5 text-center font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl lg:leading-[1.1] md:block">
@@ -24,8 +19,8 @@ export default function Home() {
           </Button>
         </Link>
       </div>
+      {/* @ts-expect-error Server Component */}
       <RecentlyAsked />
     </section>
-    // </div>
   );
 }

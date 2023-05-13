@@ -6,7 +6,7 @@ import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { Label } from '@/components/label';
 import { Icons } from '@/components/icons';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Alert, AlertDescription, AlertTitle } from './alert';
 import { AlertCircle } from 'lucide-react';
 

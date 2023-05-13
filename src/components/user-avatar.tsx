@@ -1,7 +1,6 @@
 import { Bot, UserIcon } from 'lucide-react';
 import type { ImageProps } from 'next/image';
-import Image from 'next/image';
-import { Avatar, AvatarFallback, AvatarImage } from './avatar';
+import { Avatar, AvatarImage } from './avatar';
 
 const sizeClasses = {
   sm: 'h-6 w-6',
@@ -11,6 +10,7 @@ const sizeClasses = {
 };
 type UserAvatarProps = ImageProps & {
   size?: keyof typeof sizeClasses;
+  isAi?: boolean;
 };
 export default function UserAvatar({
   size = 'md',
@@ -42,7 +42,6 @@ export default function UserAvatar({
             size === 'sm' ? 'p-1' : 'p-2'
           } ${props.className}`}
         />
-        {/* <AvatarFallback>L</AvatarFallback> */}
       </Avatar>
     );
   }
@@ -54,7 +53,6 @@ export default function UserAvatar({
         src={props.src}
         alt="user's avatar"
       />
-      {/* <AvatarFallback>L</AvatarFallback> */}
     </Avatar>
   );
 }

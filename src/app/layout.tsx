@@ -14,11 +14,7 @@ export const metadata = {
     'Get answers to your programming questions, faster, and without toxicity',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: JSX.Element }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
@@ -26,8 +22,10 @@ export default function RootLayout({
           <LayoutInterceptor
             wrapper={
               <>
+                {/* @ts-expect-error Server Component */}
                 <Header />
                 <main className="flex w-full h-full dark:bg-black bg-white">
+                  {/* @ts-expect-error Server Component */}
                   <Sidebar className="w-1/5 border-r " />
                   {children}
                 </main>

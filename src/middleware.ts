@@ -1,11 +1,9 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { db } from '../prisma/prisma';
 
 export async function middleware(request: NextRequest) {
   const fetchUrl = `${request.nextUrl.origin}/api/auth/user`;
   const session = request.cookies.get('session');
-  // redirect to /login
 
   if (!session) {
     const redirectUrl = `${request.nextUrl.origin}/login`;

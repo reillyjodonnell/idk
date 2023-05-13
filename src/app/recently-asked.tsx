@@ -1,6 +1,5 @@
 import { Button } from '@/components/button';
 import { Tags } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { db } from '../../prisma/prisma';
 import UserAvatar from '@/components/user-avatar';
@@ -28,16 +27,12 @@ export default async function RecentlyAsked() {
     },
   });
   const showMoreTags = true;
-  function toggleShowAllTags() {}
-  const id = 1;
-
   return (
     <div className="w-full flex flex-col justify-center items-center p-8 ">
       <h2 className="text-xl font-semibold mb-4">Recently Asked Questions</h2>
       <ul className="columns-1 md:columns-2 xl:columns-3 gap-x-6 gap-y-6 h-full">
         {questions.map((question) => {
           const formattedBody = extractTextFromHTML(question.body);
-
           return (
             <li
               key={question.id}
@@ -92,7 +87,6 @@ export default async function RecentlyAsked() {
                       className="whitespace-nowrap mx-1 mb-1"
                       variant="outline"
                       size="sm"
-                      // onClick={toggleShowAllTags}
                     >
                       +{question.tags.length - 3} more
                     </Button>

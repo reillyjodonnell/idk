@@ -99,6 +99,7 @@ export default async function Page({ params }: any) {
 
             {data.comments.map((comment) => (
               <React.Fragment key={comment.id}>
+                {/* @ts-expect-error Server Component */}
                 <Comment
                   id={comment.id}
                   avatar={data.author.avatar ?? ''}

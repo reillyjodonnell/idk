@@ -3,13 +3,12 @@ import { db } from '../../prisma/prisma';
 import type { Tag as TagType } from '@prisma/client';
 import PopularTags from './popular-tags';
 import Discover from './discover';
-// import { Playlist } from '../data/playlists';
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   playlists: any[];
 }
 
-export async function Sidebar({ className, playlists }: SidebarProps) {
+export async function Sidebar({ className }: SidebarProps) {
   const top5PopularTags: TagType[] = await db.tag.findMany({
     select: {
       name: true,
