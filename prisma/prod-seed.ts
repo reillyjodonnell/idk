@@ -114,8 +114,8 @@ async function seedTagsProd() {
   }
 }
 
-async function main() {
+async function mainProd() {
   // Create tags
   await seedTagsProd();
 }
-main();
+mainProd();
