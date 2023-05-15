@@ -27,6 +27,7 @@ import { Icons } from '@/components/icons';
 import { Alert, AlertDescription, AlertTitle } from '@/components/alert';
 import toast from 'react-hot-toast';
 import type { Tag } from '@prisma/client';
+import Placeholder from '@tiptap/extension-placeholder';
 
 lowlight.registerLanguage('html', html);
 lowlight.registerLanguage('css', css);
@@ -125,6 +126,9 @@ export default function Editor({
       }),
       Document,
       Text,
+      Placeholder.configure({
+        placeholder: `Type your question here!`,
+      }),
       CodeBlock,
       CodeBlockLowlight.extend({
         addNodeView() {
