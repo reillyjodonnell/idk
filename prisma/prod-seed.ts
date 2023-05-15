@@ -1,6 +1,8 @@
 const { PrismaClient } = require('@prisma/client');
 const db = new PrismaClient();
 
+// have to give unique names bc of obscure ts error where it thinks this is the same file as seed.ts
+
 const tagsProd = [
   { label: 'JavaScript', value: 'JavaScript' },
   { label: 'React', value: 'React' },
@@ -90,7 +92,7 @@ const tagsProd = [
   { label: 'Parcel', value: 'Parcel' },
 ];
 
-async function seedTags() {
+async function seedTagsProd() {
   try {
     for (const option of tagsProd) {
       const { label, value } = option;
@@ -114,6 +116,6 @@ async function seedTags() {
 
 async function main() {
   // Create tags
-  await seedTags();
+  await seedTagsProd();
 }
 main();
