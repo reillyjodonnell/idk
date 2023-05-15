@@ -1,6 +1,6 @@
 .ProseMirror {
-  border: none;
   background-color: transparent;
+  overflow-y: scroll;
 }
 
 /* border: 2px solid hsl(var(--border));

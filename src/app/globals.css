@@ -73,6 +73,13 @@
     --code-background: rgb(8, 15, 27);
   }
 }
+html {
+  background-color: hsl(var(--background));
+}
+body {
+  background-color: hsl(var(--background));
+  height: 100%;
+}
 
 @layer base {
   * {

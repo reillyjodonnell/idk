@@ -27,6 +27,7 @@ export default async function RecentlyAsked() {
     },
   });
   const showMoreTags = true;
+  if (!questions || questions.length === 0) return null;
   return (
     <div className="w-full flex flex-col justify-center items-center p-8 ">
       <h2 className="text-xl font-semibold mb-4">Recently Asked Questions</h2>

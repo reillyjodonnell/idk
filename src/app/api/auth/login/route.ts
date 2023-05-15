@@ -61,7 +61,6 @@ export async function POST(request: NextRequest) {
       'Content-Type': 'application/json',
       'Set-Cookie': `session=${session}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${SESSION_TIMEOUT}`,
     },
-    status: 302, // Redirect status code
     statusText: 'Found',
   });
 }

@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: JSX.Element }) {
               <>
                 {/* @ts-expect-error Server Component */}
                 <Header />
-                <main className="flex w-full h-full dark:bg-black bg-white">
+                <main className="flex w-full h-full">
                   {/* @ts-expect-error Server Component */}
                   <Sidebar className="w-1/5 border-r " />
                   {children}

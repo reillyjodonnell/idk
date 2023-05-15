@@ -20,22 +20,32 @@ import {
   DropdownMenuTrigger,
 } from './dropdown-menu';
 
+async function retrieve() {
+  try {
+    const cookieStore = cookies();
+    const session = cookieStore.get('session');
+    const userId = session ? await getSession(session.value) : null;
+    const user = userId
+      ? await db.user.findFirst({
+          where: {
+            id: userId,
+          },
+        })
+      : null;
+    return user;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export default async function Header({
   className = '',
 }: {
   className?: string;
 }) {
+  const user = await retrieve();
   const cookieStore = cookies();
   const session = cookieStore.get('session');
-  const userId = session ? await getSession(session.value) : null;
-  const user = userId
-    ? await db.user.findFirst({
-        where: {
-          id: userId,
-        },
-      })
-    : null;
-  console.log(!!user ? 'USER' : 'NO USER');
 
   return (
     <header
@@ -87,14 +97,18 @@ export default async function Header({
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <DropdownMenuItem>
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
                       <ModeToggle size="sm" className="w-6 justify-start" />
                       <span>Toggle theme</span>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
+                    <LogoutButton session={session?.value ?? ''} alt={true} />
+
                     {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
                   </DropdownMenuItem>
                 </DropdownMenuContent>

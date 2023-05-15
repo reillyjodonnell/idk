@@ -13,7 +13,7 @@ export default function LayoutInterceptor({
   const isLoginPage = pathname === '/login';
   const isRegisterPage = pathname === '/register';
   return (
-    <div className="  dark:bg-black w-full h-full ">
+    <div className="w-full h-full ">
       <Toaster />
       {isLoginPage || isRegisterPage ? children : wrapper}
     </div>

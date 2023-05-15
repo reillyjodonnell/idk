@@ -1,7 +1,6 @@
 'use client';
-import { useLayoutEffect, useState } from 'react';
+import { useState } from 'react';
 import { useEditor, EditorContent, ReactNodeViewRenderer } from '@tiptap/react';
-import type { Editor as EditorType } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import CodeBlock from '@tiptap/extension-code-block';
 import Document from '@tiptap/extension-document';
@@ -27,64 +26,20 @@ import { useToast } from '@/components/use-toast';
 import { Icons } from '@/components/icons';
 import { Alert, AlertDescription, AlertTitle } from '@/components/alert';
 import toast from 'react-hot-toast';
-const options = [
-  { label: 'JavaScript', value: 'JavaScript' },
-  { label: 'React', value: 'React' },
-  { label: 'Angular', value: 'Angular' },
-  { label: 'Vue.js', value: 'Vue.js' },
-  { label: 'Node.js', value: 'Node.js' },
-  { label: 'Java', value: 'Java' },
-  { label: 'Spring', value: 'Spring' },
-  { label: 'Python', value: 'Python' },
-  { label: 'Django', value: 'Django' },
-  { label: 'Flask', value: 'Flask' },
-  { label: 'PHP', value: 'PHP' },
-  { label: 'Laravel', value: 'Laravel' },
-  { label: 'Symfony', value: 'Symfony' },
-  { label: 'Ruby', value: 'Ruby' },
-  { label: 'Rails', value: 'Rails' },
-  { label: 'C#', value: 'C#' },
-  { label: '.NET', value: '.NET' },
-  { label: 'ASP.NET', value: 'ASP.NET' },
-  { label: 'Swift', value: 'Swift' },
-  { label: 'iOS', value: 'iOS' },
-  { label: 'Android', value: 'Android' },
-  { label: 'Kotlin', value: 'Kotlin' },
-  { label: 'Go', value: 'Go' },
-  { label: 'Rust', value: 'Rust' },
-  { label: 'TypeScript', value: 'TypeScript' },
-  { label: 'Express.js', value: 'Express.js' },
-  { label: 'Next.js', value: 'Next.js' },
-  { label: 'Gatsby', value: 'Gatsby' },
-  { label: 'Nest.js', value: 'Nest.js' },
-  { label: 'React Native', value: 'React Native' },
-  { label: 'Flutter', value: 'Flutter' },
-  { label: 'Vue Native', value: 'Vue Native' },
-  { label: 'Ionic', value: 'Ionic' },
-  { label: 'Electron', value: 'Electron' },
-  { label: 'jQuery', value: 'jQuery' },
-  { label: 'Bootstrap', value: 'Bootstrap' },
-  { label: 'Tailwind CSS', value: 'Tailwind CSS' },
-  { label: 'Sass', value: 'Sass' },
-  { label: 'Less', value: 'Less' },
-  { label: 'PostgreSQL', value: 'PostgreSQL' },
-  { label: 'MySQL', value: 'MySQL' },
-  { label: 'MongoDB', value: 'MongoDB' },
-  { label: 'Redis', value: 'Redis' },
-  { label: 'GraphQL', value: 'GraphQL' },
-  { label: 'Apollo', value: 'Apollo' },
-  { label: 'REST API', value: 'REST API' },
-  { label: 'WebSocket', value: 'WebSocket' },
-  { label: 'Docker', value: 'Docker' },
-  { label: 'Kubernetes', value: 'Kubernetes' },
-];
+import type { Tag } from '@prisma/client';
 
 lowlight.registerLanguage('html', html);
 lowlight.registerLanguage('css', css);
 lowlight.registerLanguage('js', js);
 lowlight.registerLanguage('ts', ts);
 
-export default function Editor({ userId }: { userId: string }) {
+export default function Editor({
+  userId,
+  tagOptions,
+}: {
+  userId: string;
+  tagOptions: Tag[];
+}) {
   const [input, setInput] = useState('');
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState([]);
@@ -102,15 +57,6 @@ export default function Editor({ userId }: { userId: string }) {
       }, ms);
     });
   }
-
-  useLayoutEffect(() => {
-    // add height 100% to body
-    document.body.style.height = '100%';
-
-    return () => {
-      document.body.style.height = 'auto';
-    };
-  }, []);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -203,24 +149,24 @@ export default function Editor({ userId }: { userId: string }) {
         </Alert>
       ) : null}
 
-      <div className=" h-full items-stretch gap-6 block sm:grid lg:grid-cols-1 xl:grid-cols-[1fr_200px]">
-        <div className="h-fit sm:h-full border justify-start items-center p-4 flex-col space-y-4 sm:flex md:order-2">
-          <div className="grid gap-2 relative ">
-            <TagSelector
-              setTags={setTags}
-              tags={tags}
-              title="Tags"
-              options={options}
-            />
-          </div>
-        </div>
+      <div className=" h-full items-stretch ">
+        {/* <div className="h-fit sm:h-full border justify-start items-center p-4 flex-col space-y-4 sm:flex md:order-2">
+          <div className="grid gap-2 relative "> */}
+        <TagSelector
+          setTags={setTags}
+          tags={tags}
+          title="Tags"
+          options={tagOptions}
+        />
+        {/* </div>
+        </div> */}
         <div className="md:order-1 h-full">
           <TabsContent value="complete" className="mt-0 border-0 p-0 h-full">
             <div className="flex flex-col h-full w-full">
               <div className="flex flex-col h-full editor-content-parent">
                 <EditorMenuBar editor={editor} />
                 <input
-                  className="flex flex-grow font-bold text-2xl border-2 border-b-0 p-4 mt-2 bg-transparent"
+                  className="flex flex-grow font-bold text-2xl border-2 border-b-0 p-8 mt-2 bg-transparent"
                   placeholder="Give it a title!"
                   value={title}
                   maxLength={100}

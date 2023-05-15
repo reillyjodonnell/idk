@@ -16,14 +16,11 @@ import {
 } from '@/components/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/popover';
 import { Separator } from '@/components/separator';
+import type { Tag } from '@prisma/client';
 
 interface DataTableFacetedFilter<TData, TValue> {
   title?: string;
-  options: {
-    label: string;
-    value: string;
-    icon?: LucideIcon;
-  }[];
+  options: Tag[];
   tags: any[];
   setTags: React.Dispatch<React.SetStateAction<TValue[]>>;
 }
@@ -35,14 +32,10 @@ export function TagSelector<TData, TValue>({
   setTags: setSelectedValues,
 }: DataTableFacetedFilter<TData, TValue>) {
   return (
-    <>
+    <div className="flex justify-start items-center py-4 ">
       <Popover>
         <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-8 border-dashed w-full"
-          >
+          <Button variant="outline" size="lg" className="h-8 border ">
             <PlusCircle className="mr-2 h-4 w-4" />
             {title}
             {selectedValues?.length > 0 && (
@@ -50,7 +43,7 @@ export function TagSelector<TData, TValue>({
                 <Separator orientation="vertical" className="mx-2 h-4" />
                 <Badge
                   variant="secondary"
-                  className="rounded-sm px-1 font-normal lg:hidden"
+                  className="rounded-sm px-1 font-normal "
                 >
                   {selectedValues.length}
                 </Badge>
@@ -68,20 +61,20 @@ export function TagSelector<TData, TValue>({
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
                 {options.map((option) => {
-                  const isSelected = selectedValues.includes(option.value);
+                  const isSelected = selectedValues.includes(option.name);
                   return (
                     <CommandItem
-                      key={option.value}
+                      key={option.id}
                       onSelect={() => {
                         if (isSelected) {
                           const filteredArr = selectedValues.filter(
-                            (str) => str !== option.value
+                            (str) => str !== option.name
                           );
                           setSelectedValues(filteredArr);
                         } else {
                           setSelectedValues((prev: any) => [
                             ...prev,
-                            option.value,
+                            option.name,
                           ]);
                         }
                       }}
@@ -96,10 +89,7 @@ export function TagSelector<TData, TValue>({
                       >
                         <Check className={cn('h-4 w-4')} />
                       </div>
-                      {option.icon && (
-                        <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-                      )}
-                      <span>{option.label}</span>
+                      <span>{option.name}</span>
                     </CommandItem>
                   );
                 })}
@@ -121,31 +111,27 @@ export function TagSelector<TData, TValue>({
           </Command>
         </PopoverContent>
       </Popover>
-      <div className="flex flex-wrap">
-        {selectedValues.length > 0 ? (
-          selectedValues.map((value) => (
-            <Badge
-              className="w-fit flex-wrap relative px-6 py-2 mx-1 my-1"
-              key={value}
-              variant="outline"
-            >
-              <span className="font-semibold px-2">{value}</span>
-              <X
-                onClick={() =>
-                  setSelectedValues((prev) =>
-                    prev.filter((item) => item !== value)
-                  )
-                }
-                className="w-4 h-4 stroke-[2px] cursor-pointer"
-              />
-            </Badge>
-          ))
-        ) : (
-          <div className="flex flex-col justify-center items-center">
-            <span className="text-ring my-2">No tags selected</span>
-          </div>
-        )}
-      </div>
-    </>
+      {/* <div className="flex flex-wrap">
+        {selectedValues.length > 0
+          ? selectedValues.map((value) => (
+              <Badge
+                className="w-fit flex-wrap relative px-4 py-1 mx-1 my-1"
+                key={value}
+                variant="outline"
+              >
+                <span className="font-semibold px-2">{value}</span>
+                <X
+                  onClick={() =>
+                    setSelectedValues((prev) =>
+                      prev.filter((item) => item !== value)
+                    )
+                  }
+                  className="w-4 h-4 stroke-[2px] cursor-pointer"
+                />
+              </Badge>
+            ))
+          : null}
+      </div> */}
+    </div>
   );
 }

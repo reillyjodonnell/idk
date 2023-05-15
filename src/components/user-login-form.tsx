@@ -33,7 +33,11 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
       });
       if (!res.ok) throw new Error(res.statusText);
       // user created!
-      if (res.ok) router.push('/');
+      // hard refresh to home page due to Next bug
+      if (res.ok) {
+        router.refresh();
+        router.push('/');
+      }
     } catch (err: any) {
       if (err.message) {
         setError(err.message);
@@ -56,7 +60,7 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
       <form onSubmit={onSubmit} method="post">
         <div className="grid gap-2">
           <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="email">
+            <Label className="" htmlFor="email">
               Email
             </Label>
             <Input
@@ -74,7 +78,7 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
             />
           </div>
           <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="password">
+            <Label className="" htmlFor="password">
               Password
             </Label>
             <Input

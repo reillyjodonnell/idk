@@ -1,8 +1,7 @@
 import { db } from '../../prisma/prisma';
 import bcrypt from 'bcryptjs';
 
-// Define the session timeout (e.g., 1 hour)
-export const SESSION_TIMEOUT = 60 * 60 * 1000; // 1 hour in milliseconds
+export const SESSION_TIMEOUT = 24 * 60 * 60 * 1000; // 24 hour in milliseconds
 
 import crypto from 'crypto';
 

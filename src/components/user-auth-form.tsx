@@ -9,6 +9,7 @@ import { Icons } from '@/components/icons';
 import { useRouter } from 'next/navigation';
 import { Alert, AlertDescription, AlertTitle } from './alert';
 import { AlertCircle } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -39,7 +40,15 @@ export function UserRegisterAuthForm({
       });
       if (!res.ok) throw new Error(res.statusText);
       // user created!
-      if (res.ok) router.push('/');
+      // hard refresh to home page due to Next bug
+      if (res.ok) {
+        toast('Account created!', {
+          icon: '🥳',
+          position: 'bottom-right',
+        });
+        router.refresh();
+        router.push('/');
+      }
     } catch (err: any) {
       if (err.message) {
         setError(err.message);
