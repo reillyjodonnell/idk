@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const db = new PrismaClient();
 
-const tags = [
+const tagsProd = [
   { label: 'JavaScript', value: 'JavaScript' },
   { label: 'React', value: 'React' },
 
@@ -92,13 +92,13 @@ const tags = [
 
 async function seedTags() {
   try {
-    for (const option of tags) {
+    for (const option of tagsProd) {
       const { label, value } = option;
-      const existingTag = await prisma.tag.findUnique({
+      const existingTag = await db.tag.findUnique({
         where: { name: value },
       });
       if (!existingTag) {
-        await prisma.tag.create({ data: { name: value } });
+        await db.tag.create({ data: { name: value } });
         console.log(`Tag "${value}" created.`);
       } else {
         console.log(`Tag "${value}" already exists.`);
@@ -108,7 +108,7 @@ async function seedTags() {
   } catch (error) {
     console.error('Error seeding tags:', error);
   } finally {
-    await prisma.$disconnect();
+    await db.$disconnect();
   }
 }
 
