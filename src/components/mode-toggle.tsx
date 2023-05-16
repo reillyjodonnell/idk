@@ -34,11 +34,7 @@ export function ModeToggle({
           <Button
             variant="ghost"
             size="sm"
-            onClick={
-              size === 'sm'
-                ? () => setTheme(theme === 'dark' ? 'light' : 'dark')
-                : () => {}
-            }
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             className={clsx('w-9 px-0', className)}
           >
             <svg
