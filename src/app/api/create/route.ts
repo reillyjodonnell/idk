@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '../../../../prisma/prisma';
+import { marked } from 'marked';
 
 export async function POST(request: NextRequest) {
   const res = await request.json();
@@ -15,6 +16,20 @@ export async function POST(request: NextRequest) {
       statusText: 'No title, body or userId provided!',
     });
   }
+
+  const aiUser = await db.user.findUnique({
+    where: {
+      username: 'AI',
+    },
+  });
+
+  if (!aiUser) {
+    return new Response('Something went wrong!', {
+      status: 500,
+      statusText: 'AI user not found!',
+    });
+  }
+
   const createdAt = new Date();
   const updatedAt = new Date();
   const post = await db.post.create({
@@ -36,7 +51,7 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const content = `${body}. Format any code in HTML format, using the pre and code tags.`;
+  // const content = `${body}. Format any code in HTML format, using the pre and code tags.`;
 
   // now chat gpt needs to respond with a message
   const chatGptResponse = await fetch(
@@ -49,7 +64,7 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({
         model: 'gpt-3.5-turbo',
-        messages: [{ role: 'user', content }],
+        messages: [{ role: 'user', content: body }],
       }),
     }
   );
@@ -63,19 +78,21 @@ export async function POST(request: NextRequest) {
 
   const chatGptResponseJson = await chatGptResponse.json();
 
-  const response = chatGptResponseJson.choices[0].message.content;
+  const responseMarkdown = chatGptResponseJson.choices[0].message.content;
 
-  if (!response) {
+  if (!responseMarkdown) {
     return new Response('Something went wrong!', {
       status: 500,
       statusText: 'Problem generating response!',
     });
   }
+
+  const responseToHtml = marked(responseMarkdown);
   // store comment on post in db as AI response
   const comment = await db.comment.create({
     data: {
-      body: response,
-      authorId: process.env.AI_ID!,
+      body: responseToHtml,
+      authorId: aiUser.id,
       postId: post.id,
     },
   });

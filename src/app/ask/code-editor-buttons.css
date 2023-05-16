@@ -12,6 +12,7 @@
   padding: 2rem;
   border: 2px solid hsl(var(--border));
   border-top: none;
+  overflow: auto;
 }
 
 /* Placeholder (on every new line) */

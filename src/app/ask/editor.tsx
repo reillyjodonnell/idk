@@ -167,7 +167,7 @@ export default function Editor({
         <div className="md:order-1 h-full">
           <TabsContent value="complete" className="mt-0 border-0 p-0 h-full">
             <div className="flex flex-col h-full w-full">
-              <div className="flex flex-col h-full editor-content-parent">
+              <div className="flex flex-col h-full editor-content-parent overflow-auto">
                 <EditorMenuBar editor={editor} />
                 <input
                   className="flex flex-grow font-bold text-2xl border-2 border-b-0 p-8 mt-2 bg-transparent"
@@ -180,7 +180,7 @@ export default function Editor({
                 <EditorContent content={input} editor={editor} />
               </div>
 
-              <div className="flex items-center space-x-2 my-4">
+              <div className="flex items-center space-x-2 my-4 z-10">
                 <Button
                   className="px-4 py-3"
                   onClick={(e: any) => onSubmit(e)}

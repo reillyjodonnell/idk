@@ -102,7 +102,6 @@ export default async function Header({
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <ModeToggle size="sm" className="w-6 justify-start" />
-                      <span>Toggle theme</span>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />

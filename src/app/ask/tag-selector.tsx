@@ -111,8 +111,11 @@ export function TagSelector<TData, TValue>({
           </Command>
         </PopoverContent>
       </Popover>
-      {/* <div className="flex flex-wrap">
-        {selectedValues.length > 0
+      <div className="flex flex-wrap">
+        {selectedValues.length === 0 ? (
+          <span className="mx-2">👈 Give this post a tag!</span>
+        ) : null}
+        {/* {selectedValues.length > 0
           ? selectedValues.map((value) => (
               <Badge
                 className="w-fit flex-wrap relative px-4 py-1 mx-1 my-1"
@@ -130,8 +133,8 @@ export function TagSelector<TData, TValue>({
                 />
               </Badge>
             ))
-          : null}
-      </div> */}
+          : null} */}
+      </div>
     </div>
   );
 }

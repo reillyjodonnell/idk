@@ -50,6 +50,17 @@ export default async function Page({ params }: any) {
     },
   });
 
+  db.post.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      views: {
+        increment: 1,
+      },
+    },
+  });
+
   if (!data) {
     return null;
   }
