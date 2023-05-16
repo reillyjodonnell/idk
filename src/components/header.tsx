@@ -105,7 +105,7 @@ export default async function Header({
               </DropdownMenu>
               <LogoutButton session={session?.value ?? ''} />
             </div>
-            <div className="block sm:hidden">
+            <div className="flex justify-center items-center sm:hidden">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button

@@ -35,7 +35,7 @@ export function TagSelector<TData, TValue>({
     <div className="flex justify-start items-center py-4 ">
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="outline" size="lg" className="h-8 border ">
+          <Button variant="outline" size="lg" className="h-12 border ">
             <PlusCircle className="mr-2 h-4 w-4" />
             {title}
             {selectedValues?.length > 0 && (
@@ -111,11 +111,11 @@ export function TagSelector<TData, TValue>({
           </Command>
         </PopoverContent>
       </Popover>
-      <div className="flex flex-wrap">
+      {/* <div className="flex flex-wrap">
         {selectedValues.length === 0 ? (
           <span className="mx-2">👈 Give this post a tag!</span>
         ) : null}
-        {/* {selectedValues.length > 0
+       {selectedValues.length > 0
           ? selectedValues.map((value) => (
               <Badge
                 className="w-fit flex-wrap relative px-4 py-1 mx-1 my-1"
@@ -133,8 +133,8 @@ export function TagSelector<TData, TValue>({
                 />
               </Badge>
             ))
-          : null} */}
-      </div>
+          : null} 
+      </div> */}
     </div>
   );
 }

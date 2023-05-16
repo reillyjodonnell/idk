@@ -80,7 +80,7 @@ export default async function Popular({ slug }: { slug: string }) {
               </div>
               <div className="py-2">
                 <span className="text-sm text-gray-600 line-clamp-4">
-                  {question.body}
+                  {formattedBody}
                 </span>
               </div>
               <div className="flex items-center space-x-4 mt-auto py-4">
