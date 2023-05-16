@@ -6,10 +6,6 @@ import CodeBlock from '@tiptap/extension-code-block';
 import Document from '@tiptap/extension-document';
 import Text from '@tiptap/extension-text';
 import { lowlight } from 'lowlight';
-import css from 'highlight.js/lib/languages/css';
-import js from 'highlight.js/lib/languages/javascript';
-import ts from 'highlight.js/lib/languages/typescript';
-import html from 'highlight.js/lib/languages/xml';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import CodeEditorButtons from './code-editor-buttons';
 import { Color } from '@tiptap/extension-color';
@@ -29,11 +25,6 @@ import toast from 'react-hot-toast';
 import type { Tag } from '@prisma/client';
 import Placeholder from '@tiptap/extension-placeholder';
 
-lowlight.registerLanguage('html', html);
-lowlight.registerLanguage('css', css);
-lowlight.registerLanguage('js', js);
-lowlight.registerLanguage('ts', ts);
-
 export default function Editor({
   userId,
   tagOptions,
@@ -50,14 +41,6 @@ export default function Editor({
 
   const router = useRouter();
   const { toast: toast2 } = useToast();
-
-  function delay(ms: number): Promise<void> {
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, ms);
-    });
-  }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

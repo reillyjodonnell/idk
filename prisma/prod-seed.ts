@@ -6,7 +6,6 @@ const db = new PrismaClient();
 const tagsProd = [
   { label: 'JavaScript', value: 'JavaScript' },
   { label: 'React', value: 'React' },
-
   { label: 'Angular', value: 'Angular' },
   { label: 'Node', value: 'Node' },
   { label: 'Java', value: 'Java' },
@@ -17,7 +16,9 @@ const tagsProd = [
   { label: 'PHP', value: 'PHP' },
   { label: 'Laravel', value: 'Laravel' },
   { label: 'Symfony', value: 'Symfony' },
+  { label: 'R', value: 'R' },
   { label: 'Ruby', value: 'Ruby' },
+  { label: 'Yaml', value: 'Yaml' },
   { label: 'Rails', value: 'Rails' },
   { label: 'C#', value: 'C#' },
   { label: '.NET', value: '.NET' },
@@ -90,6 +91,15 @@ const tagsProd = [
   { label: 'ESLint', value: 'ESLint' },
   { label: 'Prettier', value: 'Prettier' },
   { label: 'Parcel', value: 'Parcel' },
+  { label: 'Bash', value: 'Bash' },
+  { label: 'Shell', value: 'Shell' },
+  { label: 'Less', value: 'Less' },
+  { label: 'SCSS', value: 'SCSS' },
+  { label: 'WASM', value: 'WASM' },
+  { label: 'SQL', value: 'SQL' },
+  { label: 'Arduino', value: 'Arduino' },
+  { label: 'Perl', value: 'Perl' },
+  { label: 'XML', value: 'XML' },
 ];
 
 async function seedTagsProd() {

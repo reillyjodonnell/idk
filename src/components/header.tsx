@@ -60,12 +60,49 @@ export default async function Header({
         {user ? (
           <>
             <div className="hidden sm:flex justify-center items-center">
-              <Avatar className="border-2 h-10 w-10">
-                <AvatarImage src={user.avatar ?? ''} />
-                <AvatarFallback>
-                  <UserIcon />
-                </AvatarFallback>
-              </Avatar>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="relative h-8 w-8 rounded-full"
+                  >
+                    <Avatar className="border-2 h-10 w-10">
+                      <AvatarImage src={user.avatar ?? ''} />
+                      <AvatarFallback>
+                        <UserIcon />
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">
+                        {user.username}
+                      </p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        {user.email}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Profile</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <ModeToggle size="sm" className="w-6 justify-start" />
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <LogoutButton session={session?.value ?? ''} alt={true} />
+
+                    {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <LogoutButton session={session?.value ?? ''} />
             </div>
             <div className="block sm:hidden">

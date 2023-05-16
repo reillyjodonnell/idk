@@ -63,8 +63,8 @@ export default async function Popular({ slug }: { slug: string }) {
               key={question.id}
               className="border p-4 flex flex-col w-full mb-6 break-inside-avoid-column"
             >
-              <div className="flex items-start justify-start">
-                <div className="mr-2  shrink-0 self-start">
+              <div className="flex items-center justify-start">
+                <div className="shrink-0 self-start">
                   <UserAvatar
                     size="md"
                     alt="user's profile"

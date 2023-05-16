@@ -64,36 +64,38 @@ export default async function RecentlyAsked() {
                     formatTime(question.createdAt.toISOString())}
                 </span>
               </div>
-              <div className="col-span-3 w-fit flex justify-end items-center ">
-                <Tags className="h-4 w-4 flex-shrink-0 mr-2" />
-                <div
-                  className="flex flex-wrap justify-end items-center "
-                  style={{
-                    justifyContent: showMoreTags ? 'flex-start' : 'end',
-                  }}
-                >
-                  {question.tags.slice(0, 2).map(({ name, id }) => (
-                    <Link key={id} href={`/browse/${name}`}>
+              {question.tags.length > 0 ? (
+                <div className="col-span-3 w-fit flex justify-end items-center ">
+                  <Tags className="h-4 w-4 flex-shrink-0 mr-2" />
+                  <div
+                    className="flex flex-wrap justify-end items-center "
+                    style={{
+                      justifyContent: showMoreTags ? 'flex-start' : 'end',
+                    }}
+                  >
+                    {question.tags.slice(0, 3).map(({ name, id }) => (
+                      <Link key={id} href={`/browse/${name}`}>
+                        <Button
+                          className="whitespace-nowrap mx-1 mb-1"
+                          variant="outline"
+                          size="sm"
+                        >
+                          {name}
+                        </Button>
+                      </Link>
+                    ))}
+                    {showMoreTags && question.tags.length - 3 > 0 ? (
                       <Button
                         className="whitespace-nowrap mx-1 mb-1"
                         variant="outline"
                         size="sm"
                       >
-                        {name}
+                        +{question.tags.length - 3} more
                       </Button>
-                    </Link>
-                  ))}
-                  {showMoreTags && question.tags.length - 3 > 0 ? (
-                    <Button
-                      className="whitespace-nowrap mx-1 mb-1"
-                      variant="outline"
-                      size="sm"
-                    >
-                      +{question.tags.length - 3} more
-                    </Button>
-                  ) : null}
+                    ) : null}
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </li>
           );
         })}
