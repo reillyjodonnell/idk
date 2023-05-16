@@ -15,7 +15,7 @@ export default function PromptAlert() {
       <Alert className="w-80 mb-6">
         <Terminal className="h-4 w-4" />
         <AlertTitle className="">Heads up!</AlertTitle>
-        <AlertDescription>We fully support Markdown 😎</AlertDescription>
+        <AlertDescription>{`Don't forget to tag the post 😎`}</AlertDescription>
       </Alert>
     </div>
   ) : null;

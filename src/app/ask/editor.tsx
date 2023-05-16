@@ -185,7 +185,7 @@ export default function Editor({
                   className="px-4 py-3"
                   onClick={(e: any) => onSubmit(e)}
                   // onClick={(e: any) => onSubmit(e)}
-                  disabled={!title || !input || loading}
+                  disabled={!title || !input || tags.length === 0 || loading}
                 >
                   {loading ? (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -195,7 +195,7 @@ export default function Editor({
                 </Button>
                 <Button
                   className="px-4 py-3"
-                  disabled={!title || !input || loading}
+                  disabled={!title || !input || tags.length === 0 || loading}
                   variant="destructive"
                   onClick={() => {
                     setTitle('');
