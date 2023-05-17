@@ -37,7 +37,8 @@
     --ring: 215 20.2% 65.1%;
 
     --radius: 0.5rem;
-    --code-background: rgb(15, 22, 32);
+    --code-background: rgb(15, 23, 42);
+    --code-inline-background: #858a8f33;
   }
 
   .dark {
@@ -73,6 +74,7 @@
 
     --radius: 0.5rem;
     --code-background: rgb(8, 15, 27);
+    --code-inline-background: #9b9c9e45;
   }
 }
 html {
