@@ -93,6 +93,8 @@ export function UserRegisterAuthForm({
           <div className="grid gap-1">
             <Label htmlFor="username">Username</Label>
             <Input
+              maxLength={39}
+              minLength={4}
               id="username"
               placeholder="username"
               type="text"

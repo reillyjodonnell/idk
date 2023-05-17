@@ -71,7 +71,7 @@ export default async function Comment(props: CommentType) {
 
         <div className="flex justify-center items-center w-full pr-2">
           <span className="font-semibold hover:underline cursor-pointer text-lg ">
-            {props.username}
+            {props.name ?? props.username}
           </span>
 
           <span className="ml-auto">
@@ -81,7 +81,7 @@ export default async function Comment(props: CommentType) {
         </div>
       </div>
       <div className="p-4">
-        {props.username === 'AI' ? (
+        {props.username === 'ai' ? (
           <CommentFormatted content={props.body} />
         ) : (
           <span>{props.body}</span>

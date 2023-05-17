@@ -13,17 +13,23 @@ type RegisterForm = {
   password: string;
   email: string;
   username: string;
+  name: string;
 };
 type LoginForm = {
   email: string;
   password: string;
 };
-export async function register({ password, email, username }: RegisterForm) {
+export async function register({
+  password,
+  email,
+  username,
+  name,
+}: RegisterForm) {
   const passwordHash = await bcrypt.hash(password, 10);
   const user = await db.user.create({
-    data: { password: passwordHash, email, username },
+    data: { password: passwordHash, email, username, name },
   });
-  return { id: user.id, email, username };
+  return { id: user.id, email, username, name };
 }
 
 export async function login({ password, email }: LoginForm) {

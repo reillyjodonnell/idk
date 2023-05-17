@@ -2,6 +2,23 @@ import { cookies } from 'next/headers';
 import { db } from '../../../../../prisma/prisma';
 import { SESSION_TIMEOUT, createSession, register } from '@/lib/server-utils';
 import { NextRequest, NextResponse } from 'next/server';
+
+// Function to validate the username
+function validateUsername(username: string) {
+  const regex = /^[a-zA-Z0-9-]+$/; // Regular expression to match alphanumeric characters and hyphens
+  const minLength = 4;
+  const maxLength = 39;
+
+  if (!regex.test(username)) {
+    return 'Usernames can only contain letters, numbers, and hyphens.';
+  }
+
+  if (username.length < minLength || username.length > maxLength) {
+    return `Usernames must be between ${minLength} and ${maxLength} characters long.`;
+  }
+
+  return null; // Username is valid
+}
 export async function POST(request: NextRequest) {
   const res = await request.json();
   const email = res?.email;
@@ -27,10 +44,11 @@ export async function POST(request: NextRequest) {
       statusText: `This email has already been used!`,
     });
   }
+  const lowerCaseUsername = username.toLowerCase();
 
   const usernameExists = await db.user.findFirst({
     where: {
-      username,
+      username: lowerCaseUsername,
     },
   });
   if (usernameExists) {
@@ -40,7 +58,20 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const user = await register({ email, password, username });
+  const usernameError = validateUsername(username);
+  if (usernameError) {
+    return new Response(usernameError, {
+      status: 400,
+      statusText: usernameError,
+    });
+  }
+
+  const user = await register({
+    email,
+    password,
+    username: lowerCaseUsername,
+    name: username,
+  });
 
   if (!user) {
     return new Response('Something went wrong creating your account!', {

@@ -84,7 +84,7 @@ export default async function Page({ params }: any) {
         />
         {/* </Link> */}
         <div className="flex flex-col justify-center">
-          <span>@{data.author.username}</span>
+          <span>@{data.author.name ?? data.author.username}</span>
           <span>
             {formatTime(data.updatedAt.toISOString()) ??
               formatTime(data.createdAt.toISOString())}
@@ -114,7 +114,9 @@ export default async function Page({ params }: any) {
                 <Comment
                   id={comment.id}
                   avatar={data.author.avatar ?? ''}
-                  username={comment.author.username ?? ''}
+                  username={
+                    comment.author.name ?? comment.author.username ?? ''
+                  }
                   authorId={comment.author.id}
                   body={comment.body}
                   createdAt={comment.createdAt}
