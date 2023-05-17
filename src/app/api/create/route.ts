@@ -30,27 +30,6 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const createdAt = new Date();
-  const updatedAt = new Date();
-  const post = await db.post.create({
-    data: {
-      title,
-      body,
-      createdAt,
-      updatedAt,
-      authorId: userId,
-      tags: {
-        connect: tags.map((tag: string) => ({ name: tag })),
-      },
-    },
-  });
-  if (!post) {
-    return new Response('Something went wrong!', {
-      status: 500,
-      statusText: 'Post not created!',
-    });
-  }
-
   // const content = `${body}. Format any code in HTML format, using the pre and code tags.`;
 
   // now chat gpt needs to respond with a message
@@ -88,6 +67,27 @@ export async function POST(request: NextRequest) {
   }
 
   const responseToHtml = marked(responseMarkdown);
+
+  const createdAt = new Date();
+  const updatedAt = new Date();
+  const post = await db.post.create({
+    data: {
+      title,
+      body,
+      createdAt,
+      updatedAt,
+      authorId: userId,
+      tags: {
+        connect: tags.map((tag: string) => ({ name: tag })),
+      },
+    },
+  });
+  if (!post) {
+    return new Response('Something went wrong!', {
+      status: 500,
+      statusText: 'Post not created!',
+    });
+  }
   // store comment on post in db as AI response
   const comment = await db.comment.create({
     data: {

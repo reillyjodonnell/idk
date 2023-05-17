@@ -8,6 +8,7 @@ const tagsProd = [
   { label: 'React', value: 'React' },
   { label: 'Angular', value: 'Angular' },
   { label: 'Node', value: 'Node' },
+  { label: 'Prisma', value: 'Prisma' },
   { label: 'Java', value: 'Java' },
   { label: 'Spring', value: 'Spring' },
   { label: 'Python', value: 'Python' },
