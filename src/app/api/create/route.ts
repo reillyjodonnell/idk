@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
 
   const aiUser = await db.user.findUnique({
     where: {
-      username: 'AI',
+      username: 'ai',
     },
   });
 

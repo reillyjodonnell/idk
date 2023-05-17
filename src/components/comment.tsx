@@ -56,12 +56,14 @@ export default async function Comment(props: CommentType) {
     return reaction?.emoji === emoji && reaction?.authorId === user?.id;
   }
 
+  const isAI = props.username === 'ai' || props.username === 'AI';
+
   return (
     <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-2 my-2 ">
       <div className="flex items-center ">
         <div className="ml-2">
           <UserAvatar
-            isAi={props.username === 'AI'}
+            isAi={isAI}
             src={props.avatar}
             alt={`${props.username}'s avatar`}
             size="lg"
@@ -81,7 +83,7 @@ export default async function Comment(props: CommentType) {
         </div>
       </div>
       <div className="p-4">
-        {props.username === 'ai' ? (
+        {isAI ? (
           <CommentFormatted content={props.body} />
         ) : (
           <span>{props.body}</span>
